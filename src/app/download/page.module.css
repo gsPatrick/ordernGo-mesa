@@ -1,0 +1,323 @@
+/* --- LAYOUT PRINCIPAL --- */
+.container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0f0f0f;
+  position: relative;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: white;
+}
+
+/* --- LOADING STATE --- */
+.loading {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0f0f0f;
+}
+
+/* --- BACKGROUND ANIMADO --- */
+.background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.blob1 {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(223, 0, 36, 0.4) 0%, rgba(0,0,0,0) 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: float 10s infinite alternate ease-in-out;
+}
+
+.blob2 {
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, rgba(20, 20, 200, 0.2) 0%, rgba(0,0,0,0) 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: float 15s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, 30px) scale(1.1); }
+}
+
+/* --- CONTEÚDO --- */
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+  gap: 4rem;
+}
+
+/* Responsivo: Lado a lado em telas grandes */
+@media (min-width: 1024px) {
+  .content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .visualSection {
+    max-width: 50%;
+  }
+
+  .actionSection {
+    max-width: 45%;
+  }
+}
+
+/* --- LADO ESQUERDO: VISUAL --- */
+.visualSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.logoContainer {
+  background-color: white;
+  width: fit-content;
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  margin-bottom: 1rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.title {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 3.5rem;
+  }
+}
+
+.highlight {
+  color: #df0024;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #aaa;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.features {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  color: #ddd;
+  font-weight: 500;
+}
+
+.iconCheck {
+  color: #df0024;
+  flex-shrink: 0;
+}
+
+/* --- LADO DIREITO: AÇÃO (CARDS) --- */
+.actionSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Estilo Base dos Cards (Glassmorphism) */
+.installCard, .iosCard, .successCard, .manualCard {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease;
+}
+
+.installCard:hover, .manualCard:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Ícones circulares dentro dos cards */
+.iconInstall, .iconSuccess {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  align-self: flex-start;
+}
+
+.iconInstall {
+  background-color: rgba(223, 0, 36, 0.1);
+  color: #df0024;
+}
+
+.iconSuccess {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+}
+
+/* Textos dos Cards */
+.installCard h2, .successCard h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.installCard p, .successCard p {
+  color: #aaa;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+/* Botões */
+.installButton, .openButton, .linkButton {
+  width: 100%;
+  border: none;
+  padding: 1.2rem 2rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.installButton {
+  background-color: #df0024;
+  color: white;
+  box-shadow: 0 4px 15px rgba(223, 0, 36, 0.3);
+}
+
+.installButton:hover {
+  background-color: #ff002b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(223, 0, 36, 0.5);
+}
+
+.openButton {
+  background-color: #4caf50;
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.openButton:hover {
+  background-color: #55c559;
+  transform: translateY(-2px);
+}
+
+.linkButton {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.9rem;
+  padding: 1rem;
+}
+
+.linkButton:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* --- CARD ESPECÍFICO IOS --- */
+.iosCard {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.iosHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 1rem;
+}
+
+.stepsList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  color: #ddd;
+  font-size: 0.95rem;
+}
+
+.stepsList li {
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* --- CARD MANUAL (FALLBACK) --- */
+.manualCard {
+  text-align: center;
+  padding: 2rem;
+  align-items: center;
+}
+
+.manualCard h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.manualCard p {
+  color: #999;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
