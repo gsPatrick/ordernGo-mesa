@@ -1,0 +1,116 @@
+.card {
+  display: flex;
+  background-color: #080808; /* Fundo do Card sempre escuro para contraste */
+  border-radius: 16px;
+  overflow: hidden;
+  width: 100%;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border: 1px solid #1a1a1a;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border-color: var(--primary-color); /* Borda brilha com a cor da marca */
+}
+
+.imageButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 150px; /* Largura fixa da imagem */
+  align-self: stretch;
+  position: relative;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes subtlePanUp {
+  0% { transform: scale(1.1) translateY(5%); }
+  100% { transform: scale(1.1) translateY(-5%); }
+}
+.animatedImage {
+  animation: subtlePanUp 15s ease-in-out infinite alternate;
+}
+
+.content {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0; /* Evita overflow de texto flex */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.priceContainer {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-color); /* Cor Dinâmica */
+}
+
+.description {
+  font-size: 0.85rem;
+  color: #aaa;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.addButton {
+  background-color: var(--primary-color); /* Cor Dinâmica */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+  text-transform: uppercase;
+}
+
+.addButton:hover {
+  filter: brightness(0.85);
+}

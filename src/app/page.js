@@ -1,66 +1,68 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+// src/app/page.js
+'use client';
 
-export default function Home() {
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import Cookies from 'js-cookie';
+import styles from './page.module.css';
+
+export default function LanguageSelection() {
+  const router = useRouter();
+  const [isChecking, setIsChecking] = useState(true);
+
+  // 1. Proteção de Rota: Se não tiver configurado, manda para o Setup
+  useEffect(() => {
+    const token = Cookies.get('ordengo_table_token');
+    if (!token) {
+      router.push('/setup');
+    } else {
+      setIsChecking(false);
+    }
+  }, [router]);
+
+  const selectLanguage = (lang) => {
+    // Salva a preferência para o Cardápio ler depois
+    Cookies.set('ordengo_lang', lang, { expires: 365 });
+    router.push('/cardapio');
+  };
+
+  if (isChecking) return null; // Ou um loading spinner
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className={styles.main}>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Welcome to OrdenGo</h1>
+        <h2 className={styles.subtitle}>Please select your language</h2>
+
+        <div className={styles.flagsContainer}>
+          {/* REMOVIDO BRASIL CONFORME SOLICITADO */}
+
+          <div className={styles.flagCard} onClick={() => selectLanguage('us')}>
+            <div className={styles.imageWrapper}>
+              <Image
+                src="/flags/us.png"
+                alt="English"
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+            <span className={styles.languageName}>English</span>
+          </div>
+
+          <div className={styles.flagCard} onClick={() => selectLanguage('es')}>
+            <div className={styles.imageWrapper}>
+              <Image
+                src="/flags/es.png"
+                alt="Español"
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+            <span className={styles.languageName}>Español</span>
+          </div>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

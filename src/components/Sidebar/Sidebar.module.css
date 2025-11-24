@@ -1,0 +1,161 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 120px;
+  /* Usa a cor de fundo global (tema) */
+  background-color: var(--background-color);
+  padding: 1.5rem 0;
+  height: 100%;
+  flex-shrink: 0;
+  /* Borda sutil para separar do conteúdo principal */
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.5s ease;
+  z-index: 50;
+}
+
+.mainNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.navButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  /* Fundo neutro translúcido */
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  width: 90px;
+  height: 80px;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.navButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.navButton.active {
+  /* USA A COR DINÂMICA DO RESTAURANTE */
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.footerNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0 1rem;
+}
+
+.footerLinkButton {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: #888;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.footerLinkButton:hover {
+  color: white;
+}
+
+/* --- Seletor de Idioma --- */
+.languageWrapper {
+  position: relative;
+}
+
+.languageButton {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.2s;
+}
+.languageButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.flagImage {
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.dropdownMenu {
+  position: absolute;
+  bottom: 110%; /* Abre para cima */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2a2a2a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem;
+  z-index: 100;
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdownItem:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdownItem span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: white;
+}
+
+.brandLogoButton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.brandLogoButton:hover {
+  opacity: 0.8;
+}

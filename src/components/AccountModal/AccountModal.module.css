@@ -1,0 +1,114 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 199;
+  backdrop-filter: blur(2px);
+}
+
+.modalPanel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1050px;
+  max-height: 90vh;
+  max-width: 95vw;
+  background-color: white;
+  border-radius: 16px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  color: #333;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.closeButton {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.modalHeader { padding: 1.5rem 2rem; border-bottom: 1px solid #eee; }
+.modalHeader h3 { font-size: 1.1rem; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+
+.modalBody { display: grid; grid-template-columns: 2fr 1.2fr; overflow: hidden; flex-grow: 1; }
+
+/* Esquerda */
+.itemsSection { padding: 1.5rem 2rem; display: flex; flex-direction: column; overflow: hidden; border-right: 1px solid #eee; }
+.itemList { list-style: none; overflow-y: auto; flex-grow: 1; padding-right: 1rem; scrollbar-width: none; }
+.itemList::-webkit-scrollbar { display: none; }
+
+.itemsGridHeader, .itemRow { display: grid; grid-template-columns: 50px 2fr 1fr 1fr; gap: 1rem; align-items: center; }
+.itemsGridHeader { color: #aaa; font-size: 0.8rem; font-weight: 600; padding-bottom: 1rem; text-transform: uppercase; }
+.itemRow { padding: 1rem 0; border-bottom: 1px solid #f5f5f5; font-weight: 500; }
+.rightAlign { text-align: right; }
+.qty { font-weight: bold; }
+.itemNameContainer { display: flex; flex-direction: column; }
+.itemStatus { font-size: 0.7rem; color: #aaa; text-transform: uppercase; }
+
+.subtotalSection { margin-top: 1.5rem; display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; font-size: 0.9rem; }
+.subtotalSection > div { display: flex; gap: 2rem; color: #777; }
+.subtotalSection > div span:last-child { font-weight: 600; min-width: 80px; text-align: right; }
+
+/* Direita */
+.dividerSection { padding: 1.5rem; display: flex; flex-direction: column; align-items: center; background-color: #fafafa; overflow-y: auto; }
+.splitBlock, .paymentBlock { width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.dividerSection h4 { font-size: 1.1rem; margin-bottom: 1rem; color: #333; font-weight: 700; }
+.dividerSection p { color: #888; font-size: 0.85rem; margin-bottom: 0.5rem; }
+
+.peopleCounter { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.peopleCounter button { background-color: white; border: 1px solid #ddd; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #555; }
+.peopleCounter span { background-color: var(--primary-color); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; }
+.valuePerPerson { font-size: 1.8rem; font-weight: bold; color: #1a1a1a; }
+
+.separator { width: 100%; height: 1px; background-color: #ddd; margin: 1.5rem 0; }
+
+/* Pagamento */
+.paymentGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; width: 100%; margin-bottom: 1.5rem; }
+.paymentOption {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;
+  background-color: white; border: 2px solid #eee; border-radius: 12px; padding: 1rem;
+  cursor: pointer; transition: all 0.2s; color: #666;
+}
+.paymentOption:hover { border-color: #ccc; }
+.paymentOption.selected {
+  border-color: var(--primary-color);
+  background-color: rgba(223, 0, 36, 0.05);
+  color: var(--primary-color);
+}
+.paymentOption span { font-size: 0.75rem; font-weight: 600; }
+
+.requestBillButton {
+  width: 100%; padding: 1rem; background-color: #333; color: white;
+  border: none; border-radius: 12px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem; transition: background-color 0.2s; margin-top: auto;
+}
+.requestBillButton:hover { background-color: #555; }
+
+.modalFooter {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 2rem; border-top: 1px solid #eee; background-color: white;
+  border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;
+}
+.totalValue span { display: block; }
+.totalValue span:first-child { color: #888; font-size: 0.9rem; }
+.totalValue span:last-child { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); }
+
+.submitButton {
+  background-color: var(--primary-color); color: white; border: none;
+  border-radius: 8px; font-size: 1rem; font-weight: 700; padding: 1rem 3rem;
+  cursor: pointer; transition: filter 0.2s;
+}
+.submitButton:hover { filter: brightness(0.85); }

@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  align-items: center;
+  background-color: #363636;
+  border-radius: 8px;
+  height: 50px;
+  width: 100%;
+  max-width: 600px; /* Mantém um limite de largura */
+  margin-bottom: 2rem; /* Espaço entre este header e o banner de produto */
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+}
+
+.searchInput {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 0.9rem;
+  outline: none;
+  letter-spacing: 1px;
+}
+.searchInput::placeholder {
+  color: #aaa;
+  font-weight: 500;
+}
+
+.divider {
+  width: 1px;
+  height: 60%;
+  background-color: #555;
+}
+
+.tableInfo {
+  padding: 0 1.5rem;
+  color: white;
+  font-weight: 600;
+}
+
+.languageSelectorWrapper {
+  position: relative;
+}
+
+.languageSelector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  cursor: pointer;
+  height: 100%;
+}
+
+.flagImage {
+  border-radius: 4px;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: #363636;
+  border: 1px solid #555;
+  border-radius: 8px;
+  padding: 0.5rem;
+  z-index: 10;
+  width: 150px;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.dropdownItem:hover {
+  background-color: #4a4a4a;
+}
+.dropdownItem span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
+}

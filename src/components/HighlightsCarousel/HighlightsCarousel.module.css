@@ -1,0 +1,95 @@
+.carouselContainer {
+  width: 100%;
+  height: 100%;
+  background-color: #000; /* Fundo preto enquanto carrega imagem */
+  position: relative;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: relative;
+  display: flex;
+  align-items: flex-end; /* Texto na parte inferior */
+  justify-content: center;
+  padding-bottom: 6rem; /* Espaço para o texto não colar no fundo/menu */
+  overflow: hidden;
+}
+
+/* Overlay gradiente para garantir leitura do texto sobre qualquer imagem */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.1) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  text-align: center;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #e0e0e0;
+  margin-top: 0.5rem;
+}
+
+.adBadge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 1rem;
+  color: #ccc;
+}
+
+/* Animação Ken Burns (Zoom suave) */
+@keyframes subtlePanUp {
+  0% { transform: scale(1.0); }
+  100% { transform: scale(1.1); }
+}
+
+.animatedImage {
+  z-index: 0;
+  animation: subtlePanUp 10s ease-in-out infinite alternate;
+}
+
+/* Customização dos Bullets do Swiper */
+.carouselContainer :global(.swiper-pagination-bullet) {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.carouselContainer :global(.swiper-pagination-bullet-active) {
+  background-color: var(--primary-color, #df0024); /* Usa a cor do tema ou vermelho padrão */
+  width: 25px; /* Estica o bullet ativo */
+  border-radius: 5px;
+}

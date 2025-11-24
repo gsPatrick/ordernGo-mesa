@@ -1,0 +1,192 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 599;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalPanel {
+  position: relative;
+  width: 1100px;
+  max-width: 90vw;
+  height: 85vh;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden; /* Crucial para o scroll interno funcionar */
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--primary-red);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.modalContent {
+  height: 100%;
+  overflow-y: auto;
+  padding: 3rem;
+  color: #333;
+  /* Ocultar a barra de rolagem */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+.modalContent::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, etc. */
+}
+
+/* Animação reutilizada */
+@keyframes subtlePanUp {
+  0% { transform: scale(1.1) translateY(2%); }
+  100% { transform: scale(1.1) translateY(-2%); }
+}
+.animatedImage {
+  animation: subtlePanUp 20s ease-in-out infinite alternate;
+}
+
+/* Layout das seções */
+.topSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.textColumn h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+.textColumn p {
+  line-height: 1.8;
+  color: #555;
+}
+
+.thumbImages {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.thumbImageContainer {
+  width: 150px;
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.mainImageColumn {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  min-height: 400px;
+}
+
+.bannerSection {
+  margin-bottom: 3rem;
+}
+.bannerImageContainer {
+  width: 100%;
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.bottomSection h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.bottomSection p {
+  line-height: 1.8;
+  color: #555;
+  max-width: 80%;
+}
+
+
+/* ... (Mantenha o CSS anterior igual) ... */
+
+.justifiedText {
+  line-height: 1.8;
+  color: #555;
+  white-space: pre-line; /* Respeita quebras de linha do texto */
+}
+
+/* --- Estilos do Wi-Fi --- */
+.wifiContainer {
+  margin-top: 2rem;
+  background-color: #f8f9fa;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 350px;
+}
+
+.wifiHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-red);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.wifiDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.wifiRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wifiRow:hover {
+  border-color: var(--primary-red);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.wifiLabel {
+  font-size: 0.85rem;
+  color: #888;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.wifiValue {
+  font-family: monospace;
+  font-size: 1rem;
+  color: #333;
+  margin: 0 1rem;
+}
+
+.copyIcon {
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.wifiRow:hover .copyIcon {
+  color: var(--primary-red);
+}

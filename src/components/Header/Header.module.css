@@ -1,0 +1,184 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Usa a cor de fundo definida no painel administrativo */
+  background-color: var(--background-color);
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  gap: 2rem;
+  transition: background-color 0.5s ease;
+}
+
+.logoContainer {
+  padding: 0.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rightSideGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  /* Fundo semi-transparente para funcionar em temas claros e escuros */
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  height: 50px;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+}
+
+/* O ícone da lupa recebe a cor via style inline no JS (var(--primary-color)) */
+
+.searchInput {
+  background: none;
+  border: none;
+  color: inherit; /* Herda a cor do texto global (branco ou preto) */
+  font-size: 0.9rem;
+  outline: none;
+  letter-spacing: 1px;
+  width: 120px;
+}
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+.divider {
+  width: 1px;
+  height: 60%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.tableInfo {
+  padding: 0 1.5rem;
+  color: inherit;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.languageSelector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  cursor: pointer;
+  height: 100%;
+}
+
+.flagImage {
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.languageSelectorWrapper {
+  position: relative;
+  height: 100%;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  /* Fundo sólido para o dropdown, derivado da cor de fundo mas um pouco mais claro/escuro */
+  background-color: #2a2a2a; 
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem;
+  z-index: 100;
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdownItem:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdownItem span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white; /* Texto do dropdown sempre visível no fundo escuro */
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  
+  /* USA A VARIÁVEL DINÂMICA DEFINIDA NO PAINEL */
+  background-color: var(--primary-color);
+  
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  height: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+  
+  /* Divisor sutil entre os botões */
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.actions .actionButton:first-child {
+  border-left: none;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.actions .actionButton:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.actionButton:hover {
+  /* Escurece a cor dinâmica automaticamente */
+  filter: brightness(0.85);
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 1024px) {
+  .searchInput {
+    width: 80px;
+  }
+  .actionButton span {
+    display: none; /* Esconde texto, mostra só ícone */
+  }
+  .actionButton {
+    padding: 0.75rem;
+  }
+}
