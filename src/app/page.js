@@ -7,8 +7,8 @@ import Image from 'next/image';
 import Cookies from 'js-cookie';
 import styles from './page.module.css';
 import { FaSpinner } from 'react-icons/fa';
+import { useRestaurant } from '@/context/RestaurantContext'; // <--- IMPORTAR
 
-// Lista completa de idiomas suportados pelo sistema
 const LANGUAGES = [
   { code: 'br', name: 'Português', flag: '/flags/br.png' },
   { code: 'us', name: 'English', flag: '/flags/us.png' },
@@ -20,9 +20,10 @@ const LANGUAGES = [
 
 export default function LanguageSelection() {
   const router = useRouter();
+  const { changeLanguage } = useRestaurant(); // <--- USAR O CONTEXTO
   const [isChecking, setIsChecking] = useState(true);
 
-  // 1. Proteção de Rota: Se não tiver configurado, manda para o Setup
+  // 1. Proteção de Rota
   useEffect(() => {
     const token = Cookies.get('ordengo_table_token');
     if (!token) {
@@ -32,9 +33,11 @@ export default function LanguageSelection() {
     }
   }, [router]);
 
-  const selectLanguage = (lang) => {
-    // Salva a preferência para o Cardápio ler depois
-    Cookies.set('ordengo_lang', lang, { expires: 365 });
+  const selectLanguage = (langCode) => {
+    // 1. Atualiza o Estado Global + Cookie via Contexto
+    changeLanguage(langCode);
+    
+    // 2. Redireciona
     router.push('/cardapio');
   };
 
@@ -65,7 +68,7 @@ export default function LanguageSelection() {
                   alt={lang.name}
                   layout="fill"
                   objectFit="cover"
-                  priority // Carrega rápido para não piscar
+                  priority 
                 />
               </div>
               <span className={styles.languageName}>{lang.name}</span>

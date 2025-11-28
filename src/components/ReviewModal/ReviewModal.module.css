@@ -30,6 +30,7 @@
   display: flex;
   width: 950px;
   max-width: 95vw;
+  /* MANTIDO BRANCO COMO SOLICITADO */
   background-color: white;
   border-radius: 12px;
   color: #333;
@@ -116,6 +117,8 @@
 .starFilled:hover, .starEmpty:hover {
   transform: scale(1.2);
 }
+/* Estrelas mantidas em amarelo/dourado padrão para UX, 
+   mas você pode mudar para var(--primary-color) se desejar */
 .starFilled { color: #ffc107; }
 .starEmpty { color: #e0e0e0; }
 
@@ -156,9 +159,12 @@
   color: #333;
   transition: border-color 0.2s;
 }
+
+/* ALTERADO: Foco do input usa a cor primária dinâmica */
 .inputGroup input:focus, .inputGroup textarea:focus {
-  border-bottom-color: #df0024; /* Vermelho da marca */
+  border-bottom-color: var(--primary-color);
 }
+
 .inputGroup textarea {
   resize: vertical;
   min-height: 80px;
@@ -176,14 +182,17 @@
   margin-top: auto;
   align-self: flex-end;
   padding: 1rem 2rem;
-  background-color: #df0024; /* Vermelho da marca */
+  
+  /* ALTERADO: Fundo do botão usa cor dinâmica */
+  background-color: var(--primary-color);
+  
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: filter 0.2s, transform 0.1s;
   width: 100%;
   display: flex;
   align-items: center;
@@ -192,7 +201,8 @@
 }
 
 .submitButton:hover:not(:disabled) {
-  background-color: #b8001e;
+  /* ALTERADO: Usa filtro para escurecer a cor dinâmica */
+  filter: brightness(0.85);
 }
 
 .submitButton:disabled {

@@ -1,9 +1,7 @@
 :root {
-  /* Valores padrão (caso a API demore ou falhe) */
-  --primary-color: #df0024;       /* Cor Principal (Botões, Destaques) */
-  --background-color: #1f1c1d;    /* Cor de Fundo (Body) */
-  
-  /* Cores derivadas (opcional, para textos sobre fundo escuro/claro) */
+  /* Valores padrão */
+  --primary-color: #df0024;
+  --background-color: #1f1c1d;
   --text-color: #ffffff;
 }
 
@@ -11,23 +9,48 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  
+  /* 1. Bloqueia o destaque azul ao tocar em botões no mobile */
+  -webkit-tap-highlight-color: transparent;
+  
+  /* 2. Bloqueia o menu de contexto (clique longo / botão direito) */
+  -webkit-touch-callout: none;
 }
 
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
-  /* Usando as variáveis */
+  height: 100%; /* Garante altura total */
+  overflow: hidden; /* Impede scroll no body, o scroll deve ser apenas nos componentes internos */
+  
   background-color: var(--background-color); 
   color: var(--text-color); 
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   
-  /* Transição suave ao mudar de tema */
   transition: background-color 0.5s ease, color 0.5s ease;
+
+  /* --- BLOQUEIOS DE NAVEGADOR (O Segredo do App Nativo) --- */
+
+  /* 3. BLOQUEIA O PULL-TO-REFRESH (Arrastar para atualizar) */
+  overscroll-behavior: none; 
+  
+  /* 4. Bloqueia seleção de texto (usuário não consegue copiar nada) */
+  user-select: none;
+  -webkit-user-select: none;
+  
+  /* 5. Impede gestos de pinça/zoom do navegador */
+  touch-action: pan-x pan-y;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+  /* Bloqueia arrastar links (comum em desktops/tablets) */
+  -webkit-user-drag: none;
+}
+
+/* Ocultar barras de rolagem globais, mas permitir scroll */
+::-webkit-scrollbar {
+  display: none;
 }

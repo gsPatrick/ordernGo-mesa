@@ -1,21 +1,26 @@
 {
-  "name": "OrdenGo Mesa",
+  "name": "OrdenGo",
   "short_name": "OrdenGo",
+  "description": "Cardápio Digital Interativo para autoatendimento.",
+  "id": "/",
   "start_url": "/",
-  "display": "standalone",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "landscape",
   "background_color": "#1f1c1d",
   "theme_color": "#df0024",
-  "orientation": "landscape",
   "icons": [
     {
-      "src": "/icon-192x192.png",
+      "src": "/logocerta1.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/icon-512x512.png",
+      "src": "/logocerta1.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

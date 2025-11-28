@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo } from 'react';
 import styles from './AccountModal.module.css';
-import { FaTimes, FaPlus, FaMinus, FaSpinner, FaBell, FaRegCreditCard, FaCreditCard, FaQrcode, FaMoneyBillWave } from 'react-icons/fa';
+import { FaTimes, FaPlus, FaMinus, FaSpinner, FaBell, FaRegCreditCard, FaCreditCard, FaMoneyBillWave } from 'react-icons/fa';
 import { getTrans, formatCurrency } from '@/utils/i18n';
 import api from '@/lib/api';
 
@@ -11,30 +11,35 @@ export default function AccountModal({ isOpen, onClose, tableSessionId, language
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
 
-  // ... (Dicionário de Traduções 't' permanece igual) ...
+  // Estados da Gorjeta (Valores Fixos)
+  const [tipOption, setTipOption] = useState(0); // 0, 5, 10, 15 ou 'custom'
+  const [customTipValue, setCustomTipValue] = useState('');
+
   const t = {
     title: { br: 'MINHA CONTA', us: 'MY BILL', es: 'MI CUENTA', de: 'MEINE RECHNUNG', it: 'IL MIO CONTO', fr: 'MON ADDITION' },
-    empty: { br: 'Nenhum pedido realizado ou conta fechada.', us: 'No orders yet or bill closed.', es: 'Ningún pedido realizado o cuenta cerrada.' },
+    empty: { br: 'Nenhum pedido realizado.', us: 'No orders yet.', es: 'Ningún pedido realizado.' },
     headers: {
       qty: { br: 'Qtd', us: 'Qty', es: 'Cant' },
       item: { br: 'Item', us: 'Item', es: 'Artículo' },
       unit: { br: 'Unitário', us: 'Unit', es: 'Unitario' },
       val: { br: 'Valor', us: 'Value', es: 'Valor' }
     },
-    status: {
-      del: { br: 'Entregue', us: 'Delivered', es: 'Entregado' },
-      prep: { br: 'Preparo', us: 'Preparing', es: 'Preparando' }
-    },
     sub: { br: 'Subtotal', us: 'Subtotal', es: 'Subtotal' },
-    tax: { br: 'Taxa de serviço (10%)', us: 'Service fee (10%)', es: 'Tarifa de servicio (10%)' },
+    // Alterado para refletir "Gorjeta" genericamente
+    tipLabel: { br: 'Gorjeta', us: 'Tip', es: 'Propina' },
+    
+    // Títulos da direita
+    tipTitle: { br: 'Deseja adicionar gorjeta?', us: 'Add a tip?', es: '¿Añadir propina?' },
+    custom: { br: 'Outro', us: 'Other', es: 'Otro' },
+    customPlace: { br: 'Valor', us: 'Amount', es: 'Valor' },
+    
     splitTitle: { br: 'Vai dividir a conta?', us: 'Split the bill?', es: '¿Dividir la cuenta?' },
     peopleNum: { br: 'Número de pessoas', us: 'Number of people', es: 'Número de personas' },
     perPerson: { br: 'Valor por pessoa', us: 'Value per person', es: 'Valor por persona' },
+    
     paymentTitle: { br: 'Como vai pagar?', us: 'How will you pay?', es: '¿Cómo va a pagar?' },
     methods: {
-      credit: { br: 'Crédito', us: 'Credit', es: 'Crédito' },
-      debit: { br: 'Débito', us: 'Debit', es: 'Débito' },
-      pix: { br: 'Pix', us: 'Pix', es: 'Pix' },
+      card: { br: 'Cartão', us: 'Card', es: 'Tarjeta' },
       cash: { br: 'Dinheiro', us: 'Cash', es: 'Efectivo' }
     },
     requestBtn: { br: 'PEDIR A CONTA', us: 'REQUEST BILL', es: 'PEDIR LA CUENTA' },
@@ -42,29 +47,19 @@ export default function AccountModal({ isOpen, onClose, tableSessionId, language
     continue: { br: 'CONTINUAR', us: 'CONTINUE', es: 'CONTINUAR' }
   };
 
-  const lang = language === 'us' || language === 'es' ? language : 'br';
+  const lang = (language === 'us' || language === 'es') ? language : 'br';
 
-  // --- CORREÇÃO 2: Verificação Ativa de Sessão ---
   useEffect(() => {
-    // Se não tem ID de sessão, nem tenta buscar, limpa e fecha
     if (!tableSessionId) {
       setOrders([]);
       return;
     }
-
     if (isOpen) {
       setLoading(true);
-      
       api.get(`/orders/session/${tableSessionId}`)
-        .then(res => {
-          // Se tiver sucesso, seta os pedidos
-          setOrders(res.data.data.orders);
-        })
+        .then(res => setOrders(res.data.data.orders))
         .catch(err => {
-          console.error("Erro ao buscar pedidos:", err);
-          
-          // Se der erro 404 ou 400, significa que a sessão não existe mais ou foi fechada
-          // Forçamos um reload da página para o tablet voltar ao estado "Limpo"
+          console.error(err);
           if (err.response && (err.response.status === 404 || err.response.status === 400)) {
              window.location.reload();
           }
@@ -85,7 +80,6 @@ export default function AccountModal({ isOpen, onClose, tableSessionId, language
                     quantity: item.quantity,
                     unitPrice: item.unitPrice,
                     total: item.totalPrice,
-                    status: order.status
                 });
             });
         }
@@ -95,11 +89,37 @@ export default function AccountModal({ isOpen, onClose, tableSessionId, language
 
   const calculations = useMemo(() => {
     const subtotal = allItems.reduce((sum, item) => sum + parseFloat(item.total), 0);
-    const serviceTax = subtotal * 0.10;
-    const totalValue = subtotal + serviceTax;
+    
+    let tipAmount = 0;
+    
+    if (tipOption === 'custom') {
+        // Converte vírgula para ponto para cálculo seguro
+        const rawValue = parseFloat(customTipValue.replace(',', '.'));
+        // Validação extra: Se for NaN ou negativo, considera 0
+        tipAmount = (isNaN(rawValue) || rawValue < 0) ? 0 : rawValue;
+    } else {
+        // Agora tipOption é o VALOR FIXO (0, 5, 10, 15)
+        tipAmount = parseFloat(tipOption);
+    }
+
+    const totalValue = subtotal + tipAmount;
     const valuePerPerson = totalValue / Math.max(1, people);
-    return { subtotal, serviceTax, totalValue, valuePerPerson };
-  }, [allItems, people]);
+    return { subtotal, tipAmount, totalValue, valuePerPerson };
+  }, [allItems, people, tipOption, customTipValue]);
+
+  // VALIDAÇÃO RÍGIDA DO INPUT
+  const handleCustomTipChange = (e) => {
+    let val = e.target.value;
+    
+    // 1. Bloqueia qualquer caractere que não seja número, ponto ou vírgula
+    // E bloqueia sinal de menos (-) explicitamente
+    val = val.replace(/[^0-9.,]/g, '');
+
+    // 2. Limita o tamanho para evitar números gigantes (ex: max 6 caracteres: 999.99)
+    if (val.length > 6) return;
+
+    setCustomTipValue(val);
+  };
 
   const handleRequestBill = () => {
     if (!paymentMethod) {
@@ -142,14 +162,11 @@ export default function AccountModal({ isOpen, onClose, tableSessionId, language
                         <span style={{textAlign: 'right'}}>{t.headers.val[lang]}</span>
                     </div>
                     <ul className={styles.itemList}>
-                    {allItems.map(item => (
-                        <li key={item.id} className={styles.itemRow}>
+                    {allItems.map((item, idx) => (
+                        <li key={`${item.id}-${idx}`} className={styles.itemRow}>
                             <span style={{fontWeight: 'bold'}}>{item.quantity}x</span>
                             <div style={{display: 'flex', flexDirection: 'column'}}>
                                 <span>{getTrans(item.name, language)} {item.variantName && `(${getTrans(item.variantName, language)})`}</span>
-                                <span style={{fontSize: '0.7rem', color: '#aaa', textTransform: 'uppercase'}}>
-                                    {item.status === 'delivered' ? t.status.del[lang] : t.status.prep[lang]}
-                                </span>
                             </div>
                             <span style={{textAlign: 'right'}}>{formatCurrency(parseFloat(item.unitPrice))}</span>
                             <span style={{textAlign: 'right'}}>{formatCurrency(parseFloat(item.total))}</span>
@@ -157,8 +174,15 @@ export default function AccountModal({ isOpen, onClose, tableSessionId, language
                     ))}
                     </ul>
                     <div className={styles.subtotalSection}>
-                        <div><span>{t.sub[lang]}</span><span>{formatCurrency(calculations.subtotal)}</span></div>
-                        <div><span>{t.tax[lang]}</span><span>{formatCurrency(calculations.serviceTax)}</span></div>
+                        <div className={styles.subRow}>
+                            <span>{t.sub[lang]}</span>
+                            <span>{formatCurrency(calculations.subtotal)}</span>
+                        </div>
+                        {/* Exibe a gorjeta se for maior que 0 */}
+                        <div className={`${styles.subRow} ${styles.tipText}`}>
+                            <span>{t.tipLabel[lang]}</span>
+                            <span>{formatCurrency(calculations.tipAmount)}</span>
+                        </div>
                     </div>
                 </>
             )}
@@ -167,31 +191,82 @@ export default function AccountModal({ isOpen, onClose, tableSessionId, language
           {/* DIREITA: Divisão e Pagamento */}
           <div className={styles.dividerSection}>
             
-            <div className={styles.splitBlock}>
-                <h4>{t.splitTitle[lang]}</h4>
-                <p>{t.peopleNum[lang]}</p>
-                <div className={styles.peopleCounter}>
-                    <button onClick={() => setPeople(p => Math.max(1, p - 1))}><FaMinus size={14} /></button>
-                    <span>{people}</span>
-                    <button onClick={() => setPeople(p => p + 1)}><FaPlus size={14} /></button>
+            {/* SEÇÃO 1: GORJETA (VALORES FIXOS) */}
+            <div className={styles.blockContainer}>
+                <h4>{t.tipTitle[lang]}</h4>
+                <div className={styles.tipGrid}>
+                    {/* Botão sem gorjeta */}
+                    <button 
+                        className={`${styles.tipButton} ${tipOption === 0 ? styles.selectedTip : ''}`}
+                        onClick={() => { setTipOption(0); setCustomTipValue(''); }}
+                    >
+                        <FaTimes />
+                    </button>
+                    
+                    {/* Botões de Valores Fixos: 5, 10, 15 */}
+                    {[5, 10, 15].map(val => (
+                        <button 
+                            key={val}
+                            className={`${styles.tipButton} ${tipOption === val ? styles.selectedTip : ''}`}
+                            onClick={() => { setTipOption(val); setCustomTipValue(''); }}
+                        >
+                            + {val}
+                        </button>
+                    ))}
+
+                    {/* Botão Customizado */}
+                    <button 
+                        className={`${styles.tipButton} ${tipOption === 'custom' ? styles.selectedTip : ''}`}
+                        onClick={() => setTipOption('custom')}
+                    >
+                        {t.custom[lang]}
+                    </button>
                 </div>
-                <p>{t.perPerson[lang]}</p>
-                <span className={styles.valuePerPerson}>{formatCurrency(calculations.valuePerPerson)}</span>
+
+                {tipOption === 'custom' && (
+                    <div className={styles.customInputWrapper}>
+                        <input 
+                            type="text" 
+                            inputMode="decimal"
+                            placeholder={t.customPlace[lang]}
+                            value={customTipValue}
+                            onChange={handleCustomTipChange}
+                            className={styles.tipInput}
+                        />
+                    </div>
+                )}
             </div>
 
             <div className={styles.separator}></div>
 
+            {/* SEÇÃO 2: DIVISÃO */}
+            <div className={styles.splitBlock}>
+                <h4>{t.splitTitle[lang]}</h4>
+                <div className={styles.splitRow}>
+                    <div className={styles.peopleControl}>
+                        <span>{t.peopleNum[lang]}</span>
+                        <div className={styles.peopleCounter}>
+                            <button onClick={() => setPeople(p => Math.max(1, p - 1))}><FaMinus size={12} /></button>
+                            <span>{people}</span>
+                            <button onClick={() => setPeople(p => p + 1)}><FaPlus size={12} /></button>
+                        </div>
+                    </div>
+                    <div className={styles.perPersonDisplay}>
+                        <span>{t.perPerson[lang]}</span>
+                        <span className={styles.valuePerPerson}>{formatCurrency(calculations.valuePerPerson)}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.separator}></div>
+
+            {/* SEÇÃO 3: PAGAMENTO */}
             <div className={styles.paymentBlock}>
                 <h4>{t.paymentTitle[lang]}</h4>
                 <div className={styles.paymentGrid}>
-                    <button className={`${styles.paymentOption} ${paymentMethod === 'credit' ? styles.selected : ''}`} onClick={() => setPaymentMethod('credit')}>
-                        <FaRegCreditCard size={24} /> <span>{t.methods.credit[lang]}</span>
-                    </button>
-                    <button className={`${styles.paymentOption} ${paymentMethod === 'debit' ? styles.selected : ''}`} onClick={() => setPaymentMethod('debit')}>
-                        <FaCreditCard size={24} /> <span>{t.methods.debit[lang]}</span>
-                    </button>
-                    <button className={`${styles.paymentOption} ${paymentMethod === 'pix' ? styles.selected : ''}`} onClick={() => setPaymentMethod('pix')}>
-                        <FaQrcode size={24} /> <span>Pix</span>
+                    {/* Apenas Cartão e Dinheiro (Europe Standard) */}
+                    <button className={`${styles.paymentOption} ${paymentMethod === 'card' ? styles.selected : ''}`} onClick={() => setPaymentMethod('card')}>
+                        <FaRegCreditCard size={24} /> <span>{t.methods.card[lang]}</span>
                     </button>
                     <button className={`${styles.paymentOption} ${paymentMethod === 'cash' ? styles.selected : ''}`} onClick={() => setPaymentMethod('cash')}>
                         <FaMoneyBillWave size={24} /> <span>{t.methods.cash[lang]}</span>

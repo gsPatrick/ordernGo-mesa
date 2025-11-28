@@ -12,16 +12,17 @@
   padding: 3rem;
   border-radius: 24px;
   width: 100%;
-  max-width: 450px;
+  max-width: 480px; /* Um pouco mais largo para acomodar botões */
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  animation: fadeIn 0.5s ease;
 }
 
 .logoArea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .logoArea h1 {
@@ -33,14 +34,31 @@
 
 .logoArea p {
   color: #888;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   margin-top: 0.5rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
+}
+
+.label {
+  text-align: left;
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 600;
+  margin-bottom: -0.5rem;
+}
+
+.infoBox {
+  background-color: #f0f0f0;
+  padding: 0.8rem;
+  border-radius: 8px;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
 .inputGroup {
@@ -53,6 +71,7 @@
   top: 50%;
   transform: translateY(-50%);
   color: #ccc;
+  font-size: 1.2rem;
 }
 
 .input {
@@ -63,13 +82,21 @@
   font-size: 1rem;
   outline: none;
   transition: border-color 0.2s;
+  color: #333;
 }
 
 .input:focus {
   border-color: #df0024;
 }
 
+/* Botões */
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+}
+
 .button {
+  flex: 1;
   background-color: #df0024;
   color: white;
   border: none;
@@ -94,35 +121,44 @@
   cursor: not-allowed;
 }
 
+.backButton {
+  background-color: transparent;
+  border: 2px solid #eee;
+  color: #666;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100px;
+}
+.backButton:hover {
+  border-color: #ccc;
+  color: #333;
+}
+
 .errorMessage {
   color: #df0024;
   font-size: 0.9rem;
   background-color: #fff0f0;
-  padding: 0.5rem;
+  padding: 0.8rem;
   border-radius: 8px;
-}
-
-.footer {
-  margin-top: 2rem;
-  font-size: 0.75rem;
-  color: #aaa;
-}
-
-.loadingContainer {
   display: flex;
-  height: 100vh;
   align-items: center;
   justify-content: center;
-  background-color: #1f1c1d;
+  gap: 0.5rem;
 }
 
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(255,255,255,0.1);
-  border-left-color: #df0024;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.successMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+  color: #4caf50;
+  font-weight: 600;
+  animation: fadeIn 0.5s ease;
 }
 
 .spin {
@@ -131,4 +167,9 @@
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

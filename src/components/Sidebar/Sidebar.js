@@ -5,10 +5,9 @@ import Image from 'next/image';
 import styles from './Sidebar.module.css';
 import { FaStar, FaBars, FaInfoCircle, FaRegCommentDots } from 'react-icons/fa';
 import { BsFillTagFill } from 'react-icons/bs';
-import { IoIosArrowUp } from 'react-icons/io'; // Seta para cima (pois o menu abre para cima)
+import { IoIosArrowUp } from 'react-icons/io'; 
 import { useRestaurant } from '@/context/RestaurantContext';
 
-// Configuração dos Idiomas
 const languages = {
   br: { name: 'Brasil', flag: '/flags/br.png', label: 'Português' },
   us: { name: 'USA', flag: '/flags/us.png', label: 'English' },
@@ -18,7 +17,6 @@ const languages = {
   fr: { name: 'France', flag: '/flags/fr.png', label: 'Français' },
 };
 
-// Traduções da Sidebar
 const t = {
   highlights: { br: 'DESTAQUES', us: 'HIGHLIGHTS', es: 'DESTACADOS', de: 'HIGHLIGHTS', it: 'IN EVIDENZA', fr: 'VEDETTE' },
   menu: { br: 'MENU', us: 'MENU', es: 'MENÚ', de: 'SPEISEKARTE', it: 'MENU', fr: 'MENU' },
@@ -31,21 +29,24 @@ export default function Sidebar({
   onReviewClick, 
   onAboutClick, 
   onBrandLogoClick, 
+  onSecretMenu, // <--- NOVO PROP: Função para abrir menu secreto
   activeCategory, 
   onCategoryClick 
 }) {
-  // Consumindo Contexto Global
   const { language, changeLanguage, restaurantConfig } = useRestaurant();
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  
+  // Controle de Cliques Secretos
+  const [clickCount, setClickCount] = useState(0);
+  const clickTimeoutRef = useRef(null);
 
   const currentLang = languages[language] ? language : 'br';
   const logoUrl = restaurantConfig?.logoUrl 
     ? `https://geral-ordengoapi.r954jc.easypanel.host${restaurantConfig.logoUrl}` 
     : "/logocerta.png";
 
-  // Fecha dropdown ao clicar fora
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -57,14 +58,36 @@ export default function Sidebar({
   }, []);
 
   const handleLanguageSelect = (langCode) => {
-    changeLanguage(langCode); // Atualiza no contexto (muda no Header também)
+    changeLanguage(langCode);
     setIsDropdownOpen(false);
+  };
+
+  // Lógica do Clique Secreto (5 cliques em 2 segundos)
+  const handleLogoClick = () => {
+    // Incrementa contador
+    setClickCount(prev => prev + 1);
+
+    // Reseta o timer a cada clique para dar tempo
+    if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    
+    // Se chegou em 5 cliques, dispara a ação e reseta
+    if (clickCount + 1 >= 5) {
+        if (onSecretMenu) onSecretMenu(); // Chama a função passada pelo pai
+        setClickCount(0);
+    } else {
+        // Se parar de clicar por 1 segundo, zera a contagem
+        clickTimeoutRef.current = setTimeout(() => {
+            setClickCount(0);
+        }, 1000);
+        
+        // Mantém o comportamento original de abrir o BrandModal (sobre o sistema)
+        if (onBrandLogoClick) onBrandLogoClick();
+    }
   };
 
   return (
     <aside className={styles.sidebar}>
       
-      {/* NAVEGAÇÃO PRINCIPAL */}
       <div className={styles.mainNav}>
         <button 
           className={`${styles.navButton} ${activeCategory === 'destaques' ? styles.active : ''}`} 
@@ -91,10 +114,8 @@ export default function Sidebar({
         </button>
       </div>
       
-      {/* RODAPÉ DA SIDEBAR */}
       <div className={styles.footerNav}>
         
-        {/* Links Auxiliares */}
         <button onClick={onAboutClick} className={styles.footerLinkButton}>
           <FaInfoCircle size={14} style={{marginBottom: '4px'}}/>
           {t.about[currentLang]}
@@ -105,7 +126,6 @@ export default function Sidebar({
           {t.review[currentLang]}
         </button>
         
-        {/* Seletor de Idioma (Dropdown Up) */}
         <div className={styles.languageWrapper} ref={dropdownRef}>
           <button 
             className={styles.languageButton} 
@@ -145,8 +165,8 @@ export default function Sidebar({
           )}
         </div>
         
-        {/* Logo do Restaurante */}
-        <button onClick={onBrandLogoClick} className={styles.brandLogoButton}>
+        {/* LOGO DO RESTAURANTE COM CLICK SECRETO */}
+        <button onClick={handleLogoClick} className={styles.brandLogoButton}>
           <Image 
             src={logoUrl} 
             alt="Logo Restaurante" 
