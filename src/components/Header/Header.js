@@ -19,7 +19,14 @@ const languages = {
 const t = {
   search: { br: 'BUSCAR', us: 'SEARCH', es: 'BUSCAR', de: 'SUCHEN', it: 'CERCA', fr: 'CHERCHER' },
   table: { br: 'MESA', us: 'TABLE', es: 'MESA', de: 'TISCH', it: 'TAVOLO', fr: 'TABLE' },
-  call: { br: 'CHAMAR', us: 'CALL', es: 'LLAMAR', de: 'RUFEN', it: 'CHIAMARE', fr: 'APPELER' },
+call: {
+  br: 'CHAMAR GARÇOM',
+  us: 'CALL WAITER',
+  es: 'LLAMAR CAMARERO',
+  de: 'KELLNER RUFEN',
+  it: 'CHIAMARE CAMERIERE',
+  fr: 'APPELER SERVEUR'
+},
   account: { br: 'CONTA', us: 'BILL', es: 'CUENTA', de: 'RECHNUNG', it: 'CONTO', fr: 'ADDITION' },
   cart: { br: 'PEDIDO', us: 'ORDER', es: 'PEDIDO', de: 'BESTELLUNG', it: 'ORDINE', fr: 'COMMANDE' },
   noResults: { br: 'Nenhum produto encontrado', us: 'No products found', es: 'Ningún producto encontrado' }
