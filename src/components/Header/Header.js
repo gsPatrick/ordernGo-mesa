@@ -19,14 +19,14 @@ const languages = {
 const t = {
   search: { br: 'BUSCAR', us: 'SEARCH', es: 'BUSCAR', de: 'SUCHEN', it: 'CERCA', fr: 'CHERCHER' },
   table: { br: 'MESA', us: 'TABLE', es: 'MESA', de: 'TISCH', it: 'TAVOLO', fr: 'TABLE' },
-call: {
-  br: 'CHAMAR GARÇOM',
-  us: 'CALL WAITER',
-  es: 'LLAMAR CAMARERO',
-  de: 'KELLNER RUFEN',
-  it: 'CHIAMARE CAMERIERE',
-  fr: 'APPELER SERVEUR'
-},
+  call: {
+    br: 'CHAMAR GARÇOM',
+    us: 'CALL WAITER',
+    es: 'LLAMAR CAMARERO',
+    de: 'KELLNER RUFEN',
+    it: 'CHIAMARE CAMERIERE',
+    fr: 'APPELER SERVEUR'
+  },
   account: { br: 'CONTA', us: 'BILL', es: 'CUENTA', de: 'RECHNUNG', it: 'CONTO', fr: 'ADDITION' },
   cart: { br: 'PEDIDO', us: 'ORDER', es: 'PEDIDO', de: 'BESTELLUNG', it: 'ORDINE', fr: 'COMMANDE' },
   noResults: { br: 'Nenhum produto encontrado', us: 'No products found', es: 'Ningún producto encontrado' }
@@ -37,7 +37,7 @@ const BASE_IMG_URL = 'https://geral-ordengoapi.r954jc.easypanel.host';
 
 export default function Header({ onCartClick, onAccountClick, onCallWaiter, tableNumber, menuData = [], onSearchSelect }) {
   const { language, changeLanguage, restaurantConfig } = useRestaurant();
-  
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -47,10 +47,16 @@ export default function Header({ onCartClick, onAccountClick, onCallWaiter, tabl
   const searchRef = useRef(null);
 
   const currentLang = languages[language] ? language : 'us';
-  
-  const logoUrl = restaurantConfig?.logoUrl 
-    ? `${BASE_IMG_URL}${restaurantConfig.logoUrl}` 
-    : "/logocerta.png";
+
+  const [logoSrc, setLogoSrc] = useState("/logocerta.png");
+
+  useEffect(() => {
+    if (restaurantConfig?.logoUrl) {
+      setLogoSrc(`${BASE_IMG_URL}${restaurantConfig.logoUrl}`);
+    } else {
+      setLogoSrc("/logocerta.png");
+    }
+  }, [restaurantConfig]);
 
   // 1. ACHATAR A LISTA DE PRODUTOS (Categories -> Subcategories -> Products)
   const allProducts = useMemo(() => {
@@ -119,7 +125,7 @@ export default function Header({ onCartClick, onAccountClick, onCallWaiter, tabl
       const name = getTrans(product.name, language);
       const description = getTrans(product.description, language);
       const imageUrl = product.imageUrl ? `${BASE_IMG_URL}${product.imageUrl}` : '/placeholder.png';
-      
+
       onSearchSelect({
         ...product,
         finalName: name,
@@ -132,19 +138,27 @@ export default function Header({ onCartClick, onAccountClick, onCallWaiter, tabl
   return (
     <header className={styles.header}>
       <div className={styles.logoContainer}>
-        <Image src={logoUrl} alt="Logo" width={75} height={60} objectFit="contain" unoptimized={true} />
+        <Image
+          src={logoSrc}
+          alt="Logo"
+          width={75}
+          height={60}
+          objectFit="contain"
+          unoptimized={true}
+          onError={() => setLogoSrc("/logocerta.png")}
+        />
       </div>
 
       <div className={styles.rightSideGroup}>
         <div className={styles.navigation}>
-          
+
           {/* BARRA DE BUSCA */}
           <div className={styles.searchContainer} ref={searchRef}>
             <div className={styles.searchBar}>
               <FaSearch className={styles.searchIcon} />
-              <input 
-                type="text" 
-                placeholder={t.search[currentLang]} 
+              <input
+                type="text"
+                placeholder={t.search[currentLang]}
                 className={styles.searchInput}
                 value={searchQuery}
                 onChange={(e) => {
@@ -170,18 +184,18 @@ export default function Header({ onCartClick, onAccountClick, onCallWaiter, tabl
                     const pPrice = parseFloat(product.price || 0);
 
                     return (
-                      <div 
-                        key={product.id} 
+                      <div
+                        key={product.id}
                         className={styles.searchResultItem}
                         onClick={() => handleProductSelect(product)}
                       >
                         <div className={styles.resultImageWrapper}>
-                          <Image 
-                            src={pImg} 
-                            alt={pName} 
-                            width={40} 
-                            height={40} 
-                            objectFit="cover" 
+                          <Image
+                            src={pImg}
+                            alt={pName}
+                            width={40}
+                            height={40}
+                            objectFit="cover"
                             className={styles.resultImage}
                             unoptimized={true}
                           />
@@ -203,13 +217,13 @@ export default function Header({ onCartClick, onAccountClick, onCallWaiter, tabl
           </div>
 
           <div className={styles.divider}></div>
-          
+
           <div className={styles.tableInfo}>
             <span>{t.table[currentLang]} {tableNumber || '--'}</span>
           </div>
-          
+
           <div className={styles.divider}></div>
-          
+
           <div className={styles.languageSelectorWrapper} ref={dropdownRef}>
             <div className={styles.languageSelector} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
               <Image src={languages[currentLang].flag} alt="Idioma" width={34} height={24} className={styles.flagImage} />

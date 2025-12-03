@@ -11,7 +11,7 @@ export function RestaurantProvider({ children }) {
   const [loadingConfig, setLoadingConfig] = useState(true);
 
   // Estado de Idioma GLOBAL (Inicializa com 'us' se não houver cookie)
-  const [language, setLanguage] = useState('us'); 
+  const [language, setLanguage] = useState('us');
 
   // 1. Carregar Configurações
   useEffect(() => {
@@ -26,7 +26,8 @@ export function RestaurantProvider({ children }) {
         const response = await api.get('/settings');
         const config = response.data.data.config;
         setRestaurantConfig(config);
-        
+        console.log("Restaurant Config Loaded:", config); // DEBUG: Check if logoUrl is present
+
         // Aplica cores CSS
         if (config) {
           const root = document.documentElement;
@@ -57,11 +58,11 @@ export function RestaurantProvider({ children }) {
   };
 
   return (
-    <RestaurantContext.Provider value={{ 
-      restaurantConfig, 
-      loadingConfig, 
-      language, 
-      changeLanguage 
+    <RestaurantContext.Provider value={{
+      restaurantConfig,
+      loadingConfig,
+      language,
+      changeLanguage
     }}>
       {children}
     </RestaurantContext.Provider>
