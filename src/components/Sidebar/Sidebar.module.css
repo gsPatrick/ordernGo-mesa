@@ -13,16 +13,6 @@
   z-index: 50;
 }
 
-.logoContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
-  width: 100%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
 .mainNav {
   display: flex;
   flex-direction: column;
@@ -63,7 +53,7 @@
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   color: white;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .footerNav {
@@ -113,6 +103,7 @@
   gap: 4px;
   transition: background-color 0.2s;
 }
+
 .languageButton:hover {
   background: rgba(255, 255, 255, 0.1);
 }
@@ -124,7 +115,8 @@
 
 .dropdownMenu {
   position: absolute;
-  bottom: 110%; /* Abre para cima */
+  bottom: 110%;
+  /* Abre para cima */
   left: 50%;
   transform: translateX(-50%);
   /* Alterado de #2a2a2a fixo para a variável global */
@@ -137,7 +129,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .dropdownItem {
@@ -167,6 +159,7 @@
   cursor: pointer;
   transition: opacity 0.2s;
 }
+
 .brandLogoButton:hover {
   opacity: 0.8;
 }

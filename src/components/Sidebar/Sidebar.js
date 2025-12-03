@@ -88,20 +88,6 @@ export default function Sidebar({
   return (
     <aside className={styles.sidebar}>
 
-      {/* LOGO DO RESTAURANTE COM CLICK SECRETO (MOVIDO PARA O TOPO) */}
-      <div className={styles.logoContainer}>
-        <button onClick={handleLogoClick} className={styles.brandLogoButton}>
-          <Image
-            src={logoUrl}
-            alt="Logo Restaurante"
-            width={50}
-            height={50}
-            objectFit="contain"
-            unoptimized={true}
-          />
-        </button>
-      </div>
-
       <div className={styles.mainNav}>
         <button
           className={`${styles.navButton} ${activeCategory === 'destaques' ? styles.active : ''}`}
@@ -178,6 +164,18 @@ export default function Sidebar({
             </div>
           )}
         </div>
+
+        {/* LOGO DO RESTAURANTE COM CLICK SECRETO */}
+        <button onClick={handleLogoClick} className={styles.brandLogoButton}>
+          <Image
+            src={logoUrl}
+            alt="Logo Restaurante"
+            width={50}
+            height={50}
+            objectFit="contain"
+            unoptimized={true}
+          />
+        </button>
       </div>
     </aside>
   );
