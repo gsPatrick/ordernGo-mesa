@@ -43,9 +43,9 @@ export default function Sidebar({
   const clickTimeoutRef = useRef(null);
 
   const currentLang = languages[language] ? language : 'br';
-  const logoUrl = restaurantConfig?.logoUrl
-    ? `https://geral-ordengoapi.r954jc.easypanel.host${restaurantConfig.logoUrl}`
-    : "/logocerta.png";
+
+  // Logo fixa do Ordengo na Sidebar (conforme solicitado)
+  const logoUrl = "/logocerta.png";
 
   useEffect(() => {
     function handleClickOutside(event) {
