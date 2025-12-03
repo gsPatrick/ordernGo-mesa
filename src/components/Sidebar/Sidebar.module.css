@@ -13,6 +13,16 @@
   z-index: 50;
 }
 
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 .mainNav {
   display: flex;
   flex-direction: column;

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import styles from './Sidebar.module.css';
 import { FaStar, FaBars, FaInfoCircle, FaRegCommentDots } from 'react-icons/fa';
 import { BsFillTagFill } from 'react-icons/bs';
-import { IoIosArrowUp } from 'react-icons/io'; 
+import { IoIosArrowUp } from 'react-icons/io';
 import { useRestaurant } from '@/context/RestaurantContext';
 
 const languages = {
@@ -25,26 +25,26 @@ const t = {
   review: { br: 'AVALIE', us: 'REVIEW', es: 'EVALUAR', de: 'BEWERTEN', it: 'VALUTA', fr: 'AVIS' }
 };
 
-export default function Sidebar({ 
-  onReviewClick, 
-  onAboutClick, 
-  onBrandLogoClick, 
+export default function Sidebar({
+  onReviewClick,
+  onAboutClick,
+  onBrandLogoClick,
   onSecretMenu, // <--- NOVO PROP: Função para abrir menu secreto
-  activeCategory, 
-  onCategoryClick 
+  activeCategory,
+  onCategoryClick
 }) {
   const { language, changeLanguage, restaurantConfig } = useRestaurant();
-  
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  
+
   // Controle de Cliques Secretos
   const [clickCount, setClickCount] = useState(0);
   const clickTimeoutRef = useRef(null);
 
   const currentLang = languages[language] ? language : 'br';
-  const logoUrl = restaurantConfig?.logoUrl 
-    ? `https://geral-ordengoapi.r954jc.easypanel.host${restaurantConfig.logoUrl}` 
+  const logoUrl = restaurantConfig?.logoUrl
+    ? `https://geral-ordengoapi.r954jc.easypanel.host${restaurantConfig.logoUrl}`
     : "/logocerta.png";
 
   useEffect(() => {
@@ -69,74 +69,88 @@ export default function Sidebar({
 
     // Reseta o timer a cada clique para dar tempo
     if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
-    
+
     // Se chegou em 5 cliques, dispara a ação e reseta
     if (clickCount + 1 >= 5) {
-        if (onSecretMenu) onSecretMenu(); // Chama a função passada pelo pai
-        setClickCount(0);
+      if (onSecretMenu) onSecretMenu(); // Chama a função passada pelo pai
+      setClickCount(0);
     } else {
-        // Se parar de clicar por 1 segundo, zera a contagem
-        clickTimeoutRef.current = setTimeout(() => {
-            setClickCount(0);
-        }, 1000);
-        
-        // Mantém o comportamento original de abrir o BrandModal (sobre o sistema)
-        if (onBrandLogoClick) onBrandLogoClick();
+      // Se parar de clicar por 1 segundo, zera a contagem
+      clickTimeoutRef.current = setTimeout(() => {
+        setClickCount(0);
+      }, 1000);
+
+      // Mantém o comportamento original de abrir o BrandModal (sobre o sistema)
+      if (onBrandLogoClick) onBrandLogoClick();
     }
   };
 
   return (
     <aside className={styles.sidebar}>
-      
+
+      {/* LOGO DO RESTAURANTE COM CLICK SECRETO (MOVIDO PARA O TOPO) */}
+      <div className={styles.logoContainer}>
+        <button onClick={handleLogoClick} className={styles.brandLogoButton}>
+          <Image
+            src={logoUrl}
+            alt="Logo Restaurante"
+            width={50}
+            height={50}
+            objectFit="contain"
+            unoptimized={true}
+          />
+        </button>
+      </div>
+
       <div className={styles.mainNav}>
-        <button 
-          className={`${styles.navButton} ${activeCategory === 'destaques' ? styles.active : ''}`} 
+        <button
+          className={`${styles.navButton} ${activeCategory === 'destaques' ? styles.active : ''}`}
           onClick={() => onCategoryClick('destaques')}
         >
           <FaStar size={24} />
           <span>{t.highlights[currentLang]}</span>
         </button>
 
-        <button 
-          className={`${styles.navButton} ${activeCategory === 'menu' ? styles.active : ''}`} 
+        <button
+          className={`${styles.navButton} ${activeCategory === 'menu' ? styles.active : ''}`}
           onClick={() => onCategoryClick('menu')}
         >
           <FaBars size={24} />
           <span>{t.menu[currentLang]}</span>
         </button>
 
-        <button 
-          className={`${styles.navButton} ${activeCategory === 'ofertas' ? styles.active : ''}`} 
+        <button
+          className={`${styles.navButton} ${activeCategory === 'ofertas' ? styles.active : ''}`}
           onClick={() => onCategoryClick('ofertas')}
         >
           <BsFillTagFill size={24} />
           <span>{t.offers[currentLang]}</span>
         </button>
       </div>
-      
+
       <div className={styles.footerNav}>
-        
+
         <button onClick={onAboutClick} className={styles.footerLinkButton}>
-          <FaInfoCircle size={14} style={{marginBottom: '4px'}}/>
+          <FaInfoCircle size={14} style={{ marginBottom: '4px' }} />
           {t.about[currentLang]}
         </button>
-        
+
         <button onClick={onReviewClick} className={styles.footerLinkButton}>
-          <FaRegCommentDots size={14} style={{marginBottom: '4px'}}/>
+          <FaRegCommentDots size={14} style={{ marginBottom: '4px' }} />
           {t.review[currentLang]}
         </button>
-        
+
         <div className={styles.languageWrapper} ref={dropdownRef}>
-          <button 
-            className={styles.languageButton} 
+          <button
+            className={styles.languageButton}
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
-            <Image 
-              src={languages[currentLang].flag} 
-              alt="Idioma" 
-              width={30} 
-              height={20} 
-              className={styles.flagImage} 
+            <Image
+              src={languages[currentLang].flag}
+              alt="Idioma"
+              width={30}
+              height={20}
+              className={styles.flagImage}
             />
             <IoIosArrowUp color="#aaa" size={14} />
           </button>
@@ -146,17 +160,17 @@ export default function Sidebar({
               {Object.keys(languages)
                 .filter((lang) => lang !== currentLang)
                 .map((langCode) => (
-                  <div 
-                    key={langCode} 
-                    className={styles.dropdownItem} 
+                  <div
+                    key={langCode}
+                    className={styles.dropdownItem}
                     onClick={() => handleLanguageSelect(langCode)}
                   >
-                    <Image 
-                      src={languages[langCode].flag} 
-                      alt={languages[langCode].name} 
-                      width={24} 
-                      height={16} 
-                      className={styles.flagImage} 
+                    <Image
+                      src={languages[langCode].flag}
+                      alt={languages[langCode].name}
+                      width={24}
+                      height={16}
+                      className={styles.flagImage}
                     />
                     <span>{languages[langCode].name}</span>
                   </div>
@@ -164,18 +178,6 @@ export default function Sidebar({
             </div>
           )}
         </div>
-        
-        {/* LOGO DO RESTAURANTE COM CLICK SECRETO */}
-        <button onClick={handleLogoClick} className={styles.brandLogoButton}>
-          <Image 
-            src={logoUrl} 
-            alt="Logo Restaurante" 
-            width={50} 
-            height={50} 
-            objectFit="contain" 
-            unoptimized={true}
-          />
-        </button>
       </div>
     </aside>
   );
