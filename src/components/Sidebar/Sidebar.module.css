@@ -163,3 +163,184 @@
 .brandLogoButton:hover {
   opacity: 0.8;
 }
+
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 100px;
+    padding: 1rem 0;
+  }
+
+  .navButton {
+    width: 70px;
+    height: 60px;
+    font-size: 0.6rem;
+    gap: 0.2rem;
+  }
+
+  .navButton svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .footerLinkButton {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 85px;
+  }
+
+  .navButton {
+    width: 65px;
+    height: 55px;
+    font-size: 0.55rem;
+    border-radius: 12px;
+    padding: 0.2rem;
+  }
+
+  .navButton svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .navButton span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .footerNav {
+    gap: 0.8rem;
+  }
+
+  .languageButton {
+    padding: 0.3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 70px;
+    /* Ajuste fino para 600px se necessário, mas 85px pode ser ok. User pediu 85px em <768px. Vamos manter 85px ou reduzir levemente se precisar. */
+    padding: 0.5rem 0;
+    overflow-y: auto;
+  }
+
+  .mainNav {
+    gap: 0.5rem;
+    justify-content: flex-start;
+    padding-top: 1rem;
+  }
+
+  .navButton {
+    width: 55px;
+    height: auto;
+    min-height: 45px;
+    padding: 0.4rem 0.1rem;
+    font-size: 0.5rem;
+    border-radius: 8px;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .navButton svg {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0;
+  }
+
+  .footerNav {
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    margin: 0 0.2rem;
+  }
+
+  .footerLinkButton {
+    font-size: 0.6rem;
+  }
+
+  .languageButton {
+    padding: 0.2rem;
+  }
+
+  .flagImage {
+    width: 16px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 600px),
+(max-height: 500px) and (max-width: 850px) {
+  .sidebar {
+    width: 65px;
+    padding: 0.5rem 0;
+    overflow-y: auto;
+  }
+
+  .mainNav {
+    gap: 0.2rem;
+    /* Gap drástico reduzido */
+    justify-content: flex-start;
+    padding-top: 0.5rem;
+  }
+
+  .navButton {
+    width: 50px;
+    height: 50px;
+    /* Altura fixa menor para landscape */
+    min-height: 0;
+    padding: 0.2rem;
+    font-size: 0.5rem;
+    border-radius: 8px;
+    gap: 1px;
+    flex-shrink: 0;
+  }
+
+  .navButton svg {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0;
+  }
+
+  .navButton span {
+    line-height: 1;
+    text-align: center;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.5rem;
+    /* Garante fonte pequena */
+  }
+
+  .footerNav {
+    gap: 0.2rem;
+    /* Gap drástico reduzido */
+    padding-top: 0.5rem;
+    margin: 0 0.2rem;
+  }
+
+  .footerLinkButton {
+    font-size: 0.6rem;
+  }
+
+  .languageButton {
+    padding: 0.2rem;
+  }
+
+  .flagImage {
+    width: 16px;
+    height: 12px;
+  }
+
+  .brandLogoButton img {
+    width: 35px;
+    height: auto;
+  }
+}

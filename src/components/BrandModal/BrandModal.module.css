@@ -42,19 +42,26 @@
 .leftPanel {
   flex: 1;
   display: flex;
-  flex-direction: column; /* Organiza o conteúdo e o rodapé */
+  flex-direction: column;
+  /* Organiza o conteúdo e o rodapé */
 }
 
 .leftPanelContent {
-  flex-grow: 1; /* Faz o conteúdo ocupar o espaço disponível */
-  overflow-y: auto; /* Adiciona scroll SE necessário */
+  flex-grow: 1;
+  /* Faz o conteúdo ocupar o espaço disponível */
+  overflow-y: auto;
+  /* Adiciona scroll SE necessário */
   padding: 2.5rem;
   /* Oculta a barra de rolagem */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE e Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE e Edge */
 }
+
 .leftPanelContent::-webkit-scrollbar {
-  display: none; /* Webkit */
+  display: none;
+  /* Webkit */
 }
 
 .leftPanel h1 {
@@ -62,15 +69,19 @@
   margin: 1.5rem 0;
   color: #111;
 }
-.leftPanel > .leftPanelContent > p { /* Seletor mais específico */
+
+.leftPanel>.leftPanelContent>p {
+  /* Seletor mais específico */
   color: #555;
   line-height: 1.6;
 }
+
 .featureList {
   list-style: none;
   margin: 1.5rem 0;
   padding: 0;
 }
+
 .featureList li {
   display: flex;
   align-items: center;
@@ -78,24 +89,29 @@
   margin-bottom: 0.75rem;
   color: #555;
 }
+
 .checkIcon {
   color: var(--primary-red);
 }
 
 .footerLeft {
-  flex-shrink: 0; /* Impede que o rodapé encolha */
+  flex-shrink: 0;
+  /* Impede que o rodapé encolha */
   padding: 1.5rem 2.5rem;
   font-size: 0.9rem;
   border-top: 1px solid #ddd;
 }
+
 .footerLeft p {
   color: #555;
 }
+
 .footerLeft a {
   color: #111;
   font-weight: bold;
   text-decoration: none;
 }
+
 .footerLeft span {
   display: block;
   margin-top: 0.5rem;
@@ -106,14 +122,18 @@
 .rightPanel {
   flex: 1;
   display: flex;
-  flex-direction: column; /* Organiza o Swiper e a navegação */
+  flex-direction: column;
+  /* Organiza o Swiper e a navegação */
 }
 
 .swiperContainer {
-  flex-grow: 1; /* ESSENCIAL: Força o Swiper a ocupar o espaço vertical */
+  flex-grow: 1;
+  /* ESSENCIAL: Força o Swiper a ocupar o espaço vertical */
   position: relative;
-  min-height: 0; /* Fix para Flexbox em alguns navegadores */
+  min-height: 0;
+  /* Fix para Flexbox em alguns navegadores */
 }
+
 /* Garante que o Swiper interno preencha o container */
 .swiperContainer :global(.swiper) {
   position: absolute;
@@ -131,28 +151,34 @@
   justify-content: center;
   padding: 2.5rem;
 }
+
 .slideImageContainer {
   width: 100%;
-  flex-grow: 1; /* Deixa a imagem ocupar o espaço disponível */
+  flex-grow: 1;
+  /* Deixa a imagem ocupar o espaço disponível */
   position: relative;
   margin-bottom: 2rem;
 }
+
 .slideContent h3 {
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
   color: #111;
 }
+
 .slideContent p {
   color: #555;
 }
 
 .featureNav {
-  flex-shrink: 0; /* Impede que a navegação encolha */
+  flex-shrink: 0;
+  /* Impede que a navegação encolha */
   display: flex;
   justify-content: space-around;
   border-top: 1px solid #ddd;
   padding: 1.5rem;
 }
+
 .navButton {
   background: none;
   border: none;
@@ -166,10 +192,82 @@
   border-radius: 8px;
   transition: background-color 0.2s ease;
 }
+
 .navButton.active {
   color: var(--primary-red);
   font-weight: bold;
 }
+
 .navButton:hover {
   background-color: #e5e7eb;
-}   
+}
+
+@media (max-width: 900px) {
+  .modalPanel {
+    width: 95vw;
+    height: 90vh;
+    max-height: 90vh;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .leftPanel,
+  .rightPanel {
+    flex: none;
+    width: 100%;
+  }
+
+  .leftPanel {
+    order: 2;
+    /* Conteúdo abaixo da imagem/swiper se preferir, ou acima. Vamos manter padrão (acima) ou inverter? Geralmente imagem primeiro em mobile é bom, mas aqui o leftPanel tem o título. Vamos manter ordem natural (leftPanel primeiro) mas com altura auto. */
+    height: auto;
+  }
+
+  .leftPanelContent {
+    padding: 1.5rem;
+    overflow-y: visible;
+    /* Deixa o scroll pro container principal */
+  }
+
+  .leftPanel h1 {
+    font-size: 1.8rem;
+    margin: 1rem 0;
+  }
+
+  .footerLeft {
+    padding: 1rem 1.5rem;
+  }
+
+  .rightPanel {
+    order: 1;
+    /* Imagem no topo */
+    height: 300px;
+    /* Altura fixa para o swiper não sumir */
+    min-height: 300px;
+  }
+
+  .swiperContainer {
+    height: 100%;
+  }
+
+  .slideContent {
+    padding: 1rem;
+  }
+
+  .slideImageContainer {
+    margin-bottom: 1rem;
+  }
+
+  .featureNav {
+    display: none;
+    /* Ocultar navegação complexa em mobile se não couber, ou adaptar. Vamos manter mas com scroll horizontal se precisar. Ou melhor: ocultar e deixar só o swiper. O user pediu "Layout Adaptativo". Vou manter mas simplificado. */
+    padding: 1rem;
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .navButton {
+    min-width: 80px;
+  }
+}

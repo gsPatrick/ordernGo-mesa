@@ -19,7 +19,7 @@ export default function TableSetupPage() {
 
       try {
         setStatus('Validando mesa...');
-        
+
         // 1. Chama a rota pública que criamos no backend
         // GET /api/v1/tables/access/:token
         const response = await api.get(`/tables/access/${token}`);
@@ -30,6 +30,7 @@ export default function TableSetupPage() {
         Cookies.set('ordengo_restaurant_id', restaurant.id, { expires: 365 });
         Cookies.set('ordengo_table_info', JSON.stringify({
           id: table.id,
+          uuid: table.uuid, // FIX: Salva UUID para uso futuro
           number: table.number, // "10", "Terraço 1"
           restaurantName: restaurant.name,
           currency: restaurant.currency, // "BRL", "USD"
@@ -40,9 +41,9 @@ export default function TableSetupPage() {
 
         // 3. Pequeno delay para feedback visual antes de ir para o cardápio
         setTimeout(() => {
-          router.push(`/cardapio`); 
+          router.push(`/cardapio`);
         }, 1500);
-        
+
       } catch (err) {
         console.error(err);
         setError('QR Code inválido, expirado ou mesa não encontrada.');
@@ -58,7 +59,7 @@ export default function TableSetupPage() {
         <FaExclamationTriangle size={64} className="text-red-500 mb-6" />
         <h1 className="text-2xl font-bold mb-2">Erro de Configuração</h1>
         <p className="text-gray-400">{error}</p>
-        <button 
+        <button
           onClick={() => window.location.reload()}
           className="mt-8 px-6 py-3 bg-[#df0024] rounded-lg font-bold hover:bg-red-700 transition-colors"
         >
@@ -73,7 +74,7 @@ export default function TableSetupPage() {
       <div className="relative mb-8">
         <div className="w-20 h-20 border-4 border-[#df0024] border-t-transparent rounded-full animate-spin"></div>
         <div className="absolute inset-0 flex items-center justify-center">
-           {/* Opcional: Colocar logo pequeno aqui no meio */}
+          {/* Opcional: Colocar logo pequeno aqui no meio */}
         </div>
       </div>
       <h2 className="text-xl font-bold tracking-wide">{status}</h2>
