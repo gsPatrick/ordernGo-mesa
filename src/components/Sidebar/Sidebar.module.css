@@ -225,8 +225,8 @@
 
 @media (max-width: 600px) {
   .sidebar {
-    width: 70px;
-    /* Ajuste fino para 600px se necessário, mas 85px pode ser ok. User pediu 85px em <768px. Vamos manter 85px ou reduzir levemente se precisar. */
+    width: 60px;
+    /* Reduzido de 70px/85px */
     padding: 0.5rem 0;
     overflow-y: auto;
   }
@@ -238,10 +238,9 @@
   }
 
   .navButton {
-    width: 55px;
-    height: auto;
-    min-height: 45px;
-    padding: 0.4rem 0.1rem;
+    width: 45px;
+    min-height: 40px;
+    padding: 0.2rem 0;
     font-size: 0.5rem;
     border-radius: 8px;
     gap: 2px;

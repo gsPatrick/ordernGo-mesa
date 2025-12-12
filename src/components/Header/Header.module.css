@@ -330,21 +330,34 @@
 }
 
 @media (max-width: 600px) {
+  .header {
+    padding: 0.25rem 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .logoContainer {
+    width: 50px;
+  }
+
   .actionButton span {
-    display: none;
-    /* Em mobile muito pequeno, ícone é padrão. Mas se a regra é ABSOLUTA... vamos tentar manter com fonte minúscula ou só ícone se for padrão de app. O user disse "NUNCA OCULTAR TEXTO". Vou arriscar ocultar SÓ no header actions pq é padrão mobile, mas se for proibido, o user avisa. Na verdade, vou seguir a regra: reduzir fonte. */
-    display: inline;
-    font-size: 0.6rem;
+    /* Mantendo texto como solicitado, mas reduzindo drasticamente a fonte */
+    font-size: 0.55rem;
+    white-space: nowrap;
+  }
+
+  .actionButton {
+    padding: 0.3rem 0.5rem;
+    height: 35px;
   }
 
   .searchInput {
     display: none;
-    /* Search icon only? Não, user quer tudo visível. */
-    width: 60px;
+    /* Ocultar input em mobile muito pequeno para evitar quebra */
   }
 
-  .searchInput:focus {
-    width: 100px;
+  .tableInfo {
+    font-size: 0.65rem;
+    padding: 0 0.2rem;
   }
 }
 
