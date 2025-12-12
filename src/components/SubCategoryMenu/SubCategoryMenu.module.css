@@ -10,11 +10,13 @@
   gap: 0.8rem;
   overflow-x: auto;
   padding-bottom: 0.5rem;
-  scrollbar-width: none; 
+  scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.scrollArea::-webkit-scrollbar { display: none; }
+.scrollArea::-webkit-scrollbar {
+  display: none;
+}
 
 .pill {
   background-color: transparent;
@@ -36,8 +38,32 @@
 
 .pill.active {
   /* COR DINÂMICA */
-  background-color: var(--primary-color); 
+  background-color: var(--primary-color);
   border-color: var(--primary-color);
   color: white;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 600px),
+(max-width: 932px) and (orientation: landscape) {
+  .container {
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.2rem;
+  }
+
+  .scrollArea {
+    gap: 0.4rem;
+    padding-bottom: 0.2rem;
+  }
+
+  .pill {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.7rem;
+    border-radius: 20px;
+    border-width: 1px;
+  }
+
+  .pill.active {
+    box-shadow: none;
+  }
 }

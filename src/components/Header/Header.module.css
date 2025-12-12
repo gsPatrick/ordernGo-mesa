@@ -329,35 +329,106 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px),
+(max-width: 932px) and (orientation: landscape) {
   .header {
-    padding: 0.25rem 0.5rem;
+    padding: 0.2rem 0.5rem;
     gap: 0.5rem;
+    height: 45px;
+    /* Aumentado de 35px para 45px (melhor toque) */
   }
 
   .logoContainer {
-    width: 50px;
+    width: 45px;
+  }
+
+  .logoContainer img {
+    width: 100%;
+    height: auto;
   }
 
   .actionButton span {
-    /* Mantendo texto como solicitado, mas reduzindo drasticamente a fonte */
-    font-size: 0.55rem;
+    font-size: 0.6rem;
     white-space: nowrap;
+    display: inline-block;
+    /* Garante que o texto apareça */
   }
 
   .actionButton {
-    padding: 0.3rem 0.5rem;
-    height: 35px;
+    padding: 0.3rem 0.6rem;
+    height: 32px;
+    gap: 0.4rem;
+  }
+
+  .actionButton svg {
+    width: 14px !important;
+    height: 14px !important;
   }
 
   .searchInput {
     display: none;
-    /* Ocultar input em mobile muito pequeno para evitar quebra */
+  }
+
+  .searchBar {
+    padding: 0;
+  }
+
+  .searchIcon {
+    font-size: 0.8rem;
+  }
+
+  .navigation {
+    height: 32px;
+  }
+
+  .qrButton {
+    font-size: 0.6rem;
+    padding: 0 0.5rem;
+  }
+
+  .qrButton svg {
+    width: 14px !important;
+    height: 14px !important;
   }
 
   .tableInfo {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     padding: 0 0.2rem;
+  }
+
+  .languageSelector {
+    padding: 0 0.2rem;
+    gap: 0.2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .flagImage {
+    width: 20px !important;
+    height: 15px !important;
+    border-radius: 2px;
+  }
+
+  .rightSideGroup {
+    gap: 0.3rem;
+  }
+
+  /* Dropdown ajustado para não cortar */
+  .dropdownMenu {
+    top: 100%;
+    right: 0;
+    width: 120px;
+    padding: 0.3rem;
+  }
+
+  .dropdownItem {
+    padding: 0.4rem;
+    gap: 0.4rem;
+  }
+
+  .dropdownItem span {
+    font-size: 0.7rem;
   }
 }
 

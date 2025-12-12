@@ -166,13 +166,15 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px),
+(max-width: 932px) and (orientation: landscape) {
   .card {
-    height: 90px;
+    height: 85px;
+    /* Altura 85px para caber bem */
   }
 
   .imageButton {
-    width: 90px;
+    width: 85px;
   }
 
   .content {
@@ -196,16 +198,16 @@
     display: block !important;
     font-size: 0.6rem;
     line-height: 1.1;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0;
 
     /* Configuração de Scroll Interno */
-    max-height: 2.2em;
-    /* Limita a altura */
+    max-height: 2em;
+    /* Altura menor ainda */
     overflow-y: auto;
     /* Permite scroll se exceder */
     -webkit-line-clamp: unset;
-    line-clamp: unset;
     /* Remove clamp para permitir scroll */
+    line-clamp: unset;
     white-space: normal;
   }
 
@@ -216,6 +218,6 @@
   .addButton {
     padding: 0.2rem 0.5rem;
     font-size: 0.55rem;
-    height: 22px;
+    height: 20px;
   }
 }

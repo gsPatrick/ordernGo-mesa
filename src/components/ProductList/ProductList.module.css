@@ -95,11 +95,13 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px),
+(max-width: 932px) and (orientation: landscape) {
   .categoryBanner {
     height: 70px;
-    margin-bottom: 0.8rem;
-    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    /* Menor margem */
+    border-radius: 10px;
   }
 
   .bannerTitle {
@@ -109,11 +111,14 @@
 
   .bannerDescription {
     display: none;
-    /* Oculta descrição do banner em telas muito pequenas */
   }
 
   .bannerContent {
     padding: 0.5rem 1rem;
     justify-content: center;
+  }
+
+  .cardsWrapper {
+    gap: 0.5rem;
   }
 }
