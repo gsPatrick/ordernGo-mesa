@@ -71,18 +71,49 @@
 
 @media (max-width: 768px) {
   .categoryBanner {
-    height: 120px;
+    height: 100px;
+    margin-bottom: 1rem;
   }
 
   .bannerTitle {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .bannerDescription {
+    font-size: 0.7rem;
+    max-width: 80%;
+    line-height: 1.2;
   }
 
   .bannerContent {
-    padding: 1rem;
+    padding: 0.8rem;
   }
 
   .cardsWrapper {
-    gap: 0.8rem;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .categoryBanner {
+    height: 70px;
+    margin-bottom: 0.8rem;
+    border-radius: 12px;
+  }
+
+  .bannerTitle {
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+
+  .bannerDescription {
+    display: none;
+    /* Oculta descrição do banner em telas muito pequenas */
+  }
+
+  .bannerContent {
+    padding: 0.5rem 1rem;
+    justify-content: center;
   }
 }
