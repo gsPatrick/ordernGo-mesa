@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Image from 'next/image';
 import styles from './Header.module.css';
-import { FaSearch, FaBell, FaUserAlt, FaShoppingCart, FaTimes } from 'react-icons/fa';
+import QRCodeModal from '../QRCodeModal/QRCodeModal';
+import { FaSearch, FaBell, FaUserAlt, FaShoppingCart, FaTimes, FaQrcode } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
 import { useRestaurant } from '@/context/RestaurantContext';
 import { getTrans, formatCurrency } from '@/utils/i18n';
@@ -42,6 +43,7 @@ export default function Header({ onCartClick, onAccountClick, onCallWaiter, tabl
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isSearchActive, setIsSearchActive] = useState(false);
+  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
 
   const dropdownRef = useRef(null);
   const searchRef = useRef(null);
@@ -224,6 +226,18 @@ export default function Header({ onCartClick, onAccountClick, onCallWaiter, tabl
 
           <div className={styles.divider}></div>
 
+          {/* BTN CONNECT MOBILE */}
+          <button
+            className={styles.qrButton}
+            onClick={() => setIsQRModalOpen(true)}
+            title="Conectar"
+          >
+            <FaQrcode size={18} />
+            <span style={{ fontSize: '0.9rem' }}>Conectar</span>
+          </button>
+
+          <div className={styles.divider}></div>
+
           <div className={styles.languageSelectorWrapper} ref={dropdownRef}>
             <div className={styles.languageSelector} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
               <Image src={languages[currentLang].flag} alt="Idioma" width={34} height={24} className={styles.flagImage} />
@@ -259,6 +273,8 @@ export default function Header({ onCartClick, onAccountClick, onCallWaiter, tabl
           </button>
         </div>
       </div>
+
+      <QRCodeModal isOpen={isQRModalOpen} onClose={() => setIsQRModalOpen(false)} />
     </header>
   );
 }

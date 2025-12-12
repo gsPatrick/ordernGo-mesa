@@ -9,10 +9,10 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  
+
   /* 1. Bloqueia o destaque azul ao tocar em botões no mobile */
   -webkit-tap-highlight-color: transparent;
-  
+
   /* 2. Bloqueia o menu de contexto (clique longo / botão direito) */
   -webkit-touch-callout: none;
 }
@@ -20,25 +20,27 @@
 html,
 body {
   max-width: 100vw;
-  height: 100%; /* Garante altura total */
-  overflow: hidden; /* Impede scroll no body, o scroll deve ser apenas nos componentes internos */
-  
-  background-color: var(--background-color); 
-  color: var(--text-color); 
+  height: 100%;
+  /* Garante altura total */
+  overflow: hidden;
+  /* Impede scroll no body, o scroll deve ser apenas nos componentes internos */
+
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  
+
   transition: background-color 0.5s ease, color 0.5s ease;
 
   /* --- BLOQUEIOS DE NAVEGADOR (O Segredo do App Nativo) --- */
 
   /* 3. BLOQUEIA O PULL-TO-REFRESH (Arrastar para atualizar) */
-  overscroll-behavior: none; 
-  
+  overscroll-behavior: none;
+
   /* 4. Bloqueia seleção de texto (usuário não consegue copiar nada) */
   user-select: none;
   -webkit-user-select: none;
-  
+
   /* 5. Impede gestos de pinça/zoom do navegador */
   touch-action: pan-x pan-y;
 }
@@ -53,4 +55,60 @@ a {
 /* Ocultar barras de rolagem globais, mas permitir scroll */
 ::-webkit-scrollbar {
   display: none;
+}
+
+/* ============================================
+   SHRINK TO FIT - Responsividade para Tablets
+   Regra de Ouro: NADA deve ser cortado.
+   O conteúdo diminui de escala proporcionalmente.
+   ============================================ */
+
+/* Tablets menores que 1024px de largura */
+@media (max-width: 1024px) and (min-width: 769px) {
+  #__next {
+    transform: scale(0.9);
+    transform-origin: top left;
+    width: 111.11%;
+    /* Compensar o scale (100/0.9) */
+    height: 111.11%;
+  }
+}
+
+/* Tablets pequenos e iPads em portrait */
+@media (max-width: 768px) and (min-width: 601px) {
+  #__next {
+    transform: scale(0.8);
+    transform-origin: top left;
+    width: 125%;
+    /* Compensar o scale (100/0.8) */
+    height: 125%;
+  }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 600px) {
+  #__next {
+    transform: scale(0.7);
+    transform-origin: top left;
+    width: 142.86%;
+    /* Compensar o scale (100/0.7) */
+    height: 142.86%;
+  }
+}
+
+/* Tablets em landscape com altura reduzida */
+@media (max-height: 500px) and (orientation: landscape) {
+  #__next {
+    transform: scale(0.75);
+    transform-origin: top left;
+    width: 133.33%;
+    height: 133.33%;
+  }
+}
+
+/* Garante que textos nunca quebrem de forma inesperada */
+.no-text-wrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

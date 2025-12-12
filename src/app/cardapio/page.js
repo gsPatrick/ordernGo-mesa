@@ -143,7 +143,7 @@ export default function CardapioPage() {
   // ============================================================
   const handleUnbindDevice = () => {
     // 1. Limpa TODOS os Cookies
-    const allCookies = ['ordengo_table_token', 'ordengo_restaurant_id', 'ordengo_table_info', 'ordengo_user', 'ordengo_token', 'ordengo_cart', 'ordengo_lang'];
+    const allCookies = ['ordengo_table_token', 'ordengo_restaurant_id', 'ordengo_table_info', 'ordengo_user', 'ordengo_token', 'ordengo_cart', 'ordengo_lang', 'ordengo_session_token'];
     allCookies.forEach(c => Cookies.remove(c));
 
     // 2. Redireciona para Setup
@@ -172,7 +172,8 @@ export default function CardapioPage() {
       const targetTableId = data?.tableId;
       // Verifica se é para esta mesa
       if (!targetTableId || targetTableId === tableUUID) {
-        handleSoftReset();
+        // Redireciona para a tela de agradecimento
+        router.push('/thank-you');
       }
     });
 
@@ -323,6 +324,8 @@ export default function CardapioPage() {
         onAccountClick={() => setIsAccountModalOpen(true)}
         onCallWaiter={handleCallWaiter}
         tableNumber={tableInfo?.number}
+        menuData={menuTree}
+        onSearchSelect={handleProductClick}
       />
 
       <main className={styles.main}>

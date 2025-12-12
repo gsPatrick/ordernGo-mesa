@@ -47,14 +47,14 @@ export default function AboutModal({ isOpen, onClose, language }) {
 
   const copyWifi = (text) => {
     navigator.clipboard.writeText(text);
-    // Pequeno feedback visual (alert simples ou toast se tiver)
     alert(t.copied[lang]);
   };
 
   if (!isOpen) return null;
 
-  const getImgUrl = (path) => path ? `${BASE_IMG_URL}${path}` : '/placeholder.png';
-  
+  // Returns null if no path - prevents broken placeholder images
+  const getImgUrl = (path) => path ? `${BASE_IMG_URL}${path}` : null;
+
   const thumb1 = config?.highlightImagesSmall?.[0] || null;
   const thumb2 = config?.highlightImagesSmall?.[1] || null;
   const mainImg = config?.highlightImagesLarge?.[0] || null;
@@ -64,32 +64,38 @@ export default function AboutModal({ isOpen, onClose, language }) {
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.modalPanel} onClick={e => e.stopPropagation()}>
         <button className={styles.closeButton} onClick={onClose}><FaTimes size={18} /></button>
-        
+
         {loading ? (
-          <div style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-             <p>{t.loading[lang]}</p>
+          <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <p>{t.loading[lang]}</p>
           </div>
         ) : (
           <div className={styles.modalContent}>
-            
+
             {/* Seção Superior */}
             <section className={styles.topSection}>
               <div className={styles.textColumn}>
-                {/* Títulos Dinâmicos */}
                 <h2>{getTrans(config?.publicTitle, language) || getTrans(config?.aboutTitle, language) || t.defaultTitle[lang]}</h2>
-                
+
                 <p className={styles.justifiedText}>
                   {getTrans(config?.aboutText, language) || t.defaultText[lang]}
                 </p>
-                
-                <div className={styles.thumbImages}>
-                  <div className={styles.thumbImageContainer}>
-                    <Image src={getImgUrl(thumb1)} alt="Thumb 1" layout="fill" objectFit="cover" className={styles.animatedImage} unoptimized={true} />
+
+                {/* Thumbs - only render if images exist */}
+                {(thumb1 || thumb2) && (
+                  <div className={styles.thumbImages}>
+                    {thumb1 && (
+                      <div className={styles.thumbImageContainer}>
+                        <Image src={getImgUrl(thumb1)} alt="Thumb 1" layout="fill" objectFit="cover" className={styles.animatedImage} unoptimized={true} />
+                      </div>
+                    )}
+                    {thumb2 && (
+                      <div className={styles.thumbImageContainer}>
+                        <Image src={getImgUrl(thumb2)} alt="Thumb 2" layout="fill" objectFit="cover" className={styles.animatedImage} unoptimized={true} />
+                      </div>
+                    )}
                   </div>
-                  <div className={styles.thumbImageContainer}>
-                    <Image src={getImgUrl(thumb2)} alt="Thumb 2" layout="fill" objectFit="cover" className={styles.animatedImage} unoptimized={true} />
-                  </div>
-                </div>
+                )}
 
                 {/* Wi-Fi */}
                 {config?.wifiSsid && (
@@ -117,17 +123,22 @@ export default function AboutModal({ isOpen, onClose, language }) {
 
               </div>
 
-              <div className={styles.mainImageColumn}>
-                <Image src={getImgUrl(mainImg)} alt="Main" layout="fill" objectFit="cover" className={styles.animatedImage} unoptimized={true} />
-              </div>
+              {/* Main image - only render if exists */}
+              {mainImg && (
+                <div className={styles.mainImageColumn}>
+                  <Image src={getImgUrl(mainImg)} alt="Main" layout="fill" objectFit="cover" className={styles.animatedImage} unoptimized={true} />
+                </div>
+              )}
             </section>
 
-            {/* Banner */}
-            <section className={styles.bannerSection}>
-              <div className={styles.bannerImageContainer}>
-                <Image src={getImgUrl(bannerImg)} alt="Banner" layout="fill" objectFit="cover" className={styles.animatedImage} unoptimized={true} />
-              </div>
-            </section>
+            {/* Banner - only render if exists */}
+            {bannerImg && (
+              <section className={styles.bannerSection}>
+                <div className={styles.bannerImageContainer}>
+                  <Image src={getImgUrl(bannerImg)} alt="Banner" layout="fill" objectFit="cover" className={styles.animatedImage} unoptimized={true} />
+                </div>
+              </section>
+            )}
 
             {/* História */}
             <section className={styles.bottomSection}>

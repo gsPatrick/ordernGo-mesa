@@ -17,13 +17,18 @@ api.interceptors.request.use(
   (config) => {
     // O token da mesa é salvo quando o gerente escaneia o QR Code inicial
     const tableToken = Cookies.get('ordengo_table_token');
-    
+
     // Se tiver token, mandamos no header (para rotas protegidas de mesa, se houver)
     // Ou podemos usar para identificar a sessão
     if (tableToken) {
       config.headers['x-table-token'] = tableToken;
     }
-    
+
+    const sessionToken = Cookies.get('ordengo_session_token');
+    if (sessionToken) {
+      config.headers['x-session-token'] = sessionToken;
+    }
+
     return config;
   },
   (error) => Promise.reject(error)

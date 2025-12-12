@@ -7,7 +7,6 @@
   position: relative;
   width: 100%;
   height: 180px;
-  /* Reduzido de 200px */
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 2rem;
@@ -31,7 +30,6 @@
   position: relative;
   z-index: 3;
   padding: 1.5rem 2rem;
-  /* Ajustado o padding */
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -41,30 +39,27 @@
 
 .bannerTitle {
   font-size: 2.2rem;
-  /* Reduzido de 2.5rem */
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
 .bannerDescription {
   font-size: 0.9rem;
-  /* Reduzido de 1rem */
   color: #ddd;
   max-width: 60%;
 }
 
 .cardsWrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  /* Ensure full width */
 }
 
-@media (max-width: 1024px) {
-  .cardsWrapper {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-  }
+/* Removed grid media query to enforce list view everywhere */
 
+@media (max-width: 1024px) {
   .categoryBanner {
     height: 150px;
   }
@@ -75,11 +70,6 @@
 }
 
 @media (max-width: 768px) {
-  .cardsWrapper {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 0.8rem;
-  }
-
   .categoryBanner {
     height: 120px;
   }
@@ -90,5 +80,9 @@
 
   .bannerContent {
     padding: 1rem;
+  }
+
+  .cardsWrapper {
+    gap: 0.8rem;
   }
 }

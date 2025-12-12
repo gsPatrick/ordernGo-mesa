@@ -13,18 +13,18 @@
   position: relative;
   width: 100%;
   height: 100%;
-  max-width: 1200px; /* Limita a largura em telas muito grandes */
-  max-height: 800px; /* Limita a altura */
+  max-width: 1200px;
+  max-height: 800px;
   display: flex;
-  border-radius: 16px; /* Arredonda as bordas do container */
-  overflow: hidden; /* Essencial para que o Swiper respeite o border-radius */
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .closeButton {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background-color: #d32f2f;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 50%;
@@ -34,7 +34,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 20; /* Garante que fique acima de tudo */
+  z-index: 20;
 }
 
 .swiper {
@@ -49,118 +49,89 @@
   background-color: #000;
 }
 
-/* --- INÍCIO: Animação da Imagem --- */
+/* --- Animação da Imagem --- */
 @keyframes subtlePanUp {
-  0% { transform: scale(1.1) translateY(2%); }
-  100% { transform: scale(1.1) translateY(-2%); }
+  0% {
+    transform: scale(1.1) translateY(2%);
+  }
+
+  100% {
+    transform: scale(1.1) translateY(-2%);
+  }
 }
+
 .animatedImage {
   animation: subtlePanUp 20s ease-in-out infinite alternate;
 }
-/* --- FIM: Animação da Imagem --- */
 
-
-/* MUDANÇA-CHAVE: Estilização das setas de navegação */
+/* Estilização das setas de navegação */
 .modalContainer :global(.swiper-button-prev),
 .modalContainer :global(.swiper-button-next) {
   color: white;
-  background-color: transparent; /* Remove o fundo */
+  background-color: transparent;
   width: 60px;
   height: 60px;
 }
+
 .modalContainer :global(.swiper-button-prev:after),
 .modalContainer :global(.swiper-button-next:after) {
-  font-size: 3rem; /* Aumenta o tamanho do ícone da seta */
-  text-shadow: 0 2px 5px rgba(0,0,0,0.5); /* Adiciona sombra para legibilidade */
+  font-size: 3rem;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-/* MUDANÇA-CHAVE: Layout da barra de informações */
+/* Layout da barra de informações */
 .infoBar {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  /* Fundo com gradiente para uma transição suave com a imagem */
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 20%, transparent 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 40%, transparent 100%);
   color: white;
-  padding: 4rem 2rem 2rem 2rem; /* Mais padding para o texto não ficar colado */
+  padding: 5rem 2rem 2rem 2rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  z-index: 10; /* Garante que fique acima da imagem */
-  pointer-events: none; /* Permite clicar através da barra no Swiper */
-}
-/* Reabilita eventos para os elementos interativos dentro da barra */
-.infoBar > * {
-  pointer-events: auto;
-}
-
-.infoText {
-  max-width: 70%;
-}
-
-.infoText h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-}
-.infoText p {
-  font-size: 0.9rem;
-  color: #ccc;
-  line-height: 1.5;
-}
-
-.addButton {
-  background-color: #d32f2f;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 0.8rem 1.5rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  margin-left: 2rem;
-}
-
-/* Adicione ou atualize estas classes no final do arquivo */
-
-.infoBar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.95) 30%, transparent 100%);
-  color: white;
-  padding: 4rem 2rem 2rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end; /* Alinha itens na parte inferior */
+  align-items: flex-end;
   z-index: 10;
-  pointer-events: none; 
+  pointer-events: none;
 }
 
-/* Reabilita cliques nos filhos */
-.infoBar > * {
+.infoBar>* {
   pointer-events: auto;
 }
 
 .infoText {
-  max-width: 60%;
+  max-width: 65%;
+  position: relative;
+  z-index: 15;
 }
 
 .infoText h3 {
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
   font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .infoText p {
   font-size: 1rem;
   color: #ddd;
   line-height: 1.5;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  max-height: 120px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.infoText p::-webkit-scrollbar {
+  width: 4px;
+  display: block;
+}
+
+.infoText p::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
 }
 
 .actionArea {
@@ -174,12 +145,11 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: #fff;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .addButton {
-  /* Usa a variável global definida no RestaurantContext */
-  background-color: var(--primary-color); 
+  background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 12px;
@@ -188,7 +158,7 @@
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s, filter 0.2s;
 }
 

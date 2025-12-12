@@ -11,15 +11,15 @@
   "theme_color": "#df0024",
   "icons": [
     {
-      "src": "/logocerta1.png",
+      "src": "/iconepwa.ico",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/x-icon",
       "purpose": "any maskable"
     },
     {
-      "src": "/logocerta1.png",
+      "src": "/iconepwa.ico",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/x-icon",
       "purpose": "any maskable"
     }
   ]

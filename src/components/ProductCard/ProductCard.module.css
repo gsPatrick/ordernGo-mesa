@@ -1,20 +1,20 @@
 .card {
   display: flex;
-  flex-direction: column;
-  /* Mudança para vertical para caber no Grid */
+  flex-direction: row;
+  /* Horizontal layout */
   background-color: rgba(255, 255, 255, 0.03);
   border-radius: 16px;
   overflow: hidden;
   width: 100%;
-  height: 100%;
-  /* Ocupa altura total do grid item */
+  height: 140px;
+  /* Fixed height for horizontal card */
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
   border-color: var(--primary-color);
 }
 
@@ -24,11 +24,12 @@
   padding: 0;
   margin: 0;
   cursor: pointer;
-  width: 100%;
-  /* Largura total */
-  height: 160px;
-  /* Altura fixa para imagem */
+  width: 140px;
+  /* Fixed width for image */
+  height: 100%;
+  /* Full height */
   position: relative;
+  flex-shrink: 0;
 }
 
 .imageContainer {
@@ -58,6 +59,7 @@
   flex-direction: column;
   flex-grow: 1;
   min-width: 0;
+  justify-content: space-between;
 }
 
 .header {
@@ -65,15 +67,14 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
 }
 
 .title {
-  font-size: 1rem;
-  /* Reduzido */
+  font-size: 1.1rem;
   font-weight: 700;
   color: white;
-  line-height: 1.3;
+  line-height: 1.2;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -87,22 +88,19 @@
 }
 
 .price {
-  font-size: 1rem;
-  /* Reduzido */
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--primary-color);
 }
 
 .description {
-  font-size: 0.8rem;
-  /* Reduzido */
+  font-size: 0.85rem;
   color: #aaa;
-  line-height: 1.4;
-  margin-bottom: 1rem;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
   flex-grow: 1;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  /* Mais linhas pois é vertical */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -111,8 +109,6 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: auto;
-  /* Empurra para baixo */
 }
 
 .addButton {
@@ -120,14 +116,12 @@
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 1.2rem;
   font-size: 0.8rem;
   font-weight: 700;
   cursor: pointer;
   transition: filter 0.2s ease;
   text-transform: uppercase;
-  width: 100%;
-  /* Botão full width no card vertical fica bom */
 }
 
 .addButton:hover {
@@ -135,8 +129,12 @@
 }
 
 @media (max-width: 768px) {
+  .card {
+    height: 120px;
+  }
+
   .imageButton {
-    height: 140px;
+    width: 120px;
   }
 
   .content {
@@ -144,11 +142,16 @@
   }
 
   .title {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .description {
     font-size: 0.75rem;
     -webkit-line-clamp: 2;
+  }
+
+  .addButton {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.75rem;
   }
 }

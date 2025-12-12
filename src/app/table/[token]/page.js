@@ -14,50 +14,70 @@ export default function TableSetupPage() {
   const [status, setStatus] = useState('Conectando ao servidor...');
 
   useEffect(() => {
-    const initializeTablet = async () => {
+    const initializeSession = async () => {
       if (!token) return;
 
       try {
         setStatus('Validando mesa...');
 
-        // 1. Chama a rota pública que criamos no backend
-        // GET /api/v1/tables/access/:token
+        // 1. Busca dados da mesa
         const response = await api.get(`/tables/access/${token}`);
         const { table, restaurant } = response.data.data;
 
-        // 2. Salva a identidade do tablet nos Cookies (persistente por 1 ano)
-        Cookies.set('ordengo_table_token', token, { expires: 365 });
-        Cookies.set('ordengo_restaurant_id', restaurant.id, { expires: 365 });
+        setStatus('Iniciando sessão...');
+
+        // 2. Verifica se já existe sessão ativa ou cria uma nova
+        let sessionToken = table.activeSession?.sessionToken;
+
+        if (!sessionToken) {
+          // Cria nova sessão
+          const sessionRes = await api.post('/orders/session/start', {
+            restaurantId: restaurant.id,
+            tableId: table.uuid
+          });
+          sessionToken = sessionRes.data.data.session.sessionToken;
+        }
+
+        // 3. Salva o token da sessão (Cookie de Sessão - expira ao fechar navegador)
+        Cookies.set('ordengo_session_token', sessionToken);
+
+        // Salva o token da MESA (QR Code) também, para o CardapioPage usar
+        Cookies.set('ordengo_table_token', token); // Session cookie (no expires)
+
+        // Salva ID do restaurante para contexto
+        Cookies.set('ordengo_restaurant_id', restaurant.id);
+
+        // Salva info da mesa para exibição (opcional)
         Cookies.set('ordengo_table_info', JSON.stringify({
           id: table.id,
-          uuid: table.uuid, // FIX: Salva UUID para uso futuro
-          number: table.number, // "10", "Terraço 1"
+          uuid: table.uuid,
+          number: table.number,
           restaurantName: restaurant.name,
-          currency: restaurant.currency, // "BRL", "USD"
-          locales: restaurant.locales // ["pt-BR", "en-US"]
-        }), { expires: 365 });
+          currency: restaurant.currency,
+          locales: restaurant.locales
+        }));
 
-        setStatus(`Sucesso! Configurado como ${restaurant.name} - Mesa ${table.number}`);
+        setStatus(`Mesa ${table.number} aberta! Redirecionando...`);
 
-        // 3. Pequeno delay para feedback visual antes de ir para o cardápio
+        // 4. Redireciona para o cardápio
         setTimeout(() => {
           router.push(`/cardapio`);
-        }, 1500);
+        }, 1000);
 
       } catch (err) {
         console.error(err);
-        setError('QR Code inválido, expirado ou mesa não encontrada.');
+        setError('Não foi possível abrir a mesa. Tente novamente ou chame o garçom.');
       }
     };
 
-    initializeTablet();
+    initializeSession();
   }, [token, router]);
 
   if (error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#1f1c1d] text-white p-8 text-center">
         <FaExclamationTriangle size={64} className="text-red-500 mb-6" />
-        <h1 className="text-2xl font-bold mb-2">Erro de Configuração</h1>
+        <h1 className="text-2xl font-bold mb-2">Erro</h1>
         <p className="text-gray-400">{error}</p>
         <button
           onClick={() => window.location.reload()}
@@ -73,12 +93,8 @@ export default function TableSetupPage() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#1f1c1d] text-white">
       <div className="relative mb-8">
         <div className="w-20 h-20 border-4 border-[#df0024] border-t-transparent rounded-full animate-spin"></div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          {/* Opcional: Colocar logo pequeno aqui no meio */}
-        </div>
       </div>
       <h2 className="text-xl font-bold tracking-wide">{status}</h2>
-      <p className="text-sm text-gray-500 mt-2">Não feche esta janela.</p>
     </div>
   );
 }
