@@ -2,7 +2,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { RestaurantProvider } from "@/context/RestaurantContext";
-import KioskGuard from "@/components/KioskGuard/KioskGuard"; // <--- IMPORTAR
+import KioskGuard from "@/components/KioskGuard/KioskGuard";
+import OrientationGuard from "@/components/OrientationGuard/OrientationGuard"; // <--- NOVO
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,7 +21,7 @@ export const viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  viewportFit: "cover", // Importante para iPhones com notch/ilha
+  viewportFit: "cover",
 };
 
 export const metadata = {
@@ -29,11 +30,11 @@ export const metadata = {
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent", // Faz a barra de status se misturar ao app
+    statusBarStyle: "black-translucent",
     title: "OrdenGo",
   },
   formatDetection: {
-    telephone: false, // Evita que números virem links de ligar
+    telephone: false,
   },
 };
 
@@ -42,7 +43,8 @@ export default function RootLayout({ children }) {
     <html lang="pt-BR">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <RestaurantProvider>
-          <KioskGuard /> {/* <--- ADICIONAR AQUI: Protege e mantém tela ligada */}
+          <KioskGuard />
+          <OrientationGuard /> {/* <--- Adicionado aqui */}
           {children}
         </RestaurantProvider>
       </body>

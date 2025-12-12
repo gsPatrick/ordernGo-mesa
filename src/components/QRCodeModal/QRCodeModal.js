@@ -11,9 +11,16 @@ export default function QRCodeModal({ isOpen, onClose }) {
 
     useEffect(() => {
         if (isOpen) {
-            // Reconstrói a URL completa para esta mesa
-            const currentUrl = window.location.href;
-            setUrl(currentUrl);
+            // Reconstrói a URL completa para esta mesa usando o token original
+            // Isso garante que o celular passe pelo processo de login/validação
+            const tableToken = Cookies.get('ordengo_table_token');
+            if (tableToken) {
+                const origin = window.location.origin;
+                setUrl(`${origin}/table/${tableToken}`);
+            } else {
+                // Fallback (não deve acontecer se o fluxo estiver correto)
+                setUrl(window.location.href);
+            }
         }
     }, [isOpen]);
 
