@@ -3,10 +3,19 @@
 import { useEffect, useState } from 'react';
 import { FaMobileAlt } from 'react-icons/fa';
 
+import { usePathname } from 'next/navigation';
+
 export default function OrientationGuard() {
     const [isPortrait, setIsPortrait] = useState(false);
+    const pathname = usePathname();
 
     useEffect(() => {
+        // Ignora verificação na página de download
+        if (pathname === '/download') {
+            setIsPortrait(false);
+            return;
+        }
+
         const checkOrientation = () => {
             // Verifica se a altura é maior que a largura
             if (window.innerHeight > window.innerWidth) {

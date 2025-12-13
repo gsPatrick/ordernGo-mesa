@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { 
-  Download, 
-  Share, 
-  PlusSquare, 
-  Smartphone, 
-  CheckCircle, 
+import {
+  Download,
+  Share,
+  PlusSquare,
+  Smartphone,
+  CheckCircle,
   ArrowRight,
   Loader2
 } from 'lucide-react';
@@ -43,20 +43,25 @@ export default function DownloadPage() {
     // Marca como pronto após verificar ambiente
     setIsReady(true);
 
+    // 4. Libera o scroll global e Orientation nesta página
+    document.body.style.overflow = 'auto';
+
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      // Restaura o comportamento padrão (No Scroll / Kiosk Locked)
+      document.body.style.overflow = 'hidden';
     };
   }, []);
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) return;
-    
+
     // Mostra o prompt nativo do Android
     deferredPrompt.prompt();
-    
+
     // Espera a escolha do usuário
     const { outcome } = await deferredPrompt.userChoice;
-    
+
     if (outcome === 'accepted') {
       setDeferredPrompt(null); // Esconde o botão se aceitou
     }
@@ -66,7 +71,7 @@ export default function DownloadPage() {
 
   return (
     <div className={styles.container}>
-      
+
       {/* Fundo Decorativo */}
       <div className={styles.background}>
         <div className={styles.blob1}></div>
@@ -74,11 +79,11 @@ export default function DownloadPage() {
       </div>
 
       <div className={styles.content}>
-        
+
         {/* Lado Esquerdo: Visual */}
         <div className={styles.visualSection}>
           <div className={styles.logoContainer}>
-             <Image src="/logocerta.png" alt="OrdenGo" width={120} height={100} objectFit="contain" unoptimized={true} />
+            <Image src="/logocerta.png" alt="OrdenGo" width={120} height={100} objectFit="contain" unoptimized={true} />
           </div>
           <h1 className={styles.title}>
             OrdenGo <br />
@@ -106,7 +111,7 @@ export default function DownloadPage() {
 
         {/* Lado Direito: Ação */}
         <div className={styles.actionSection}>
-          
+
           {/* CASO 1: JÁ INSTALADO */}
           {isStandalone ? (
             <div className={styles.successCard}>
@@ -129,7 +134,7 @@ export default function DownloadPage() {
                   </div>
                   <h2>Instalar Agora</h2>
                   <p>Clique abaixo para baixar e instalar o App automaticamente.</p>
-                  
+
                   {/* ESSE BOTÃO DISPARA A INSTALAÇÃO NATIVA */}
                   <button onClick={handleInstallClick} className={styles.installButton}>
                     BAIXAR APP <ArrowRight size={18} />
