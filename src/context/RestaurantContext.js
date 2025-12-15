@@ -10,8 +10,11 @@ export function RestaurantProvider({ children }) {
   const [restaurantConfig, setRestaurantConfig] = useState(null);
   const [loadingConfig, setLoadingConfig] = useState(true);
 
-  // Estado de Idioma GLOBAL (Inicializa com 'us' se não houver cookie)
-  const [language, setLanguage] = useState('us');
+  // Estado de Idioma GLOBAL (Inicializa com 'es' - Espanhol como padrão)
+  const [language, setLanguage] = useState('es');
+
+  // Estado de Moeda (EUR como padrão para Europa)
+  const [currency, setCurrency] = useState('EUR');
 
   // 1. Carregar Configurações
   useEffect(() => {
@@ -24,9 +27,18 @@ export function RestaurantProvider({ children }) {
 
       try {
         const response = await api.get('/settings');
-        const config = response.data.data.config;
+        const data = response.data.data;
+
+        // O backend retorna o restaurant completo com config aninhada
+        const config = data.config || data;
         setRestaurantConfig(config);
-        console.log("Restaurant Config Loaded:", config); // DEBUG: Check if logoUrl is present
+
+        // Extrai a moeda do restaurante (vem no nível superior ou em data.currency)
+        if (data.currency) {
+          setCurrency(data.currency);
+        }
+
+        console.log("Restaurant Config Loaded:", config);
 
         // Aplica cores CSS
         if (config) {
@@ -62,7 +74,8 @@ export function RestaurantProvider({ children }) {
       restaurantConfig,
       loadingConfig,
       language,
-      changeLanguage
+      changeLanguage,
+      currency
     }}>
       {children}
     </RestaurantContext.Provider>

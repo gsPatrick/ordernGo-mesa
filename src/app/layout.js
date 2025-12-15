@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { RestaurantProvider } from "@/context/RestaurantContext";
 import KioskGuard from "@/components/KioskGuard/KioskGuard";
-import OrientationGuard from "@/components/OrientationGuard/OrientationGuard"; // <--- NOVO
+import OrientationGuard from "@/components/OrientationGuard/OrientationGuard";
+import Screensaver from "@/components/Screensaver/Screensaver"; // <--- NOVO
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,7 +45,8 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <RestaurantProvider>
           <KioskGuard />
-          <OrientationGuard /> {/* <--- Adicionado aqui */}
+          <OrientationGuard />
+          <Screensaver /> {/* <--- Adicionado aqui */}
           {children}
         </RestaurantProvider>
       </body>

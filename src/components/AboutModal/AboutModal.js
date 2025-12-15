@@ -142,9 +142,9 @@ export default function AboutModal({ isOpen, onClose, language }) {
 
             {/* História */}
             <section className={styles.bottomSection}>
-              <h3>{t.historyTitle[lang]}</h3>
+              <h3>{getTrans(config?.ourHistoryTitle, language) || t.historyTitle[lang]}</h3>
               <p className={styles.justifiedText}>
-                {getTrans(config?.ourHistory, language) || getTrans(config?.aboutText, language)}
+                {getTrans(config?.ourHistory, language) || config?.description || t.defaultText[lang]}
               </p>
             </section>
 

@@ -13,7 +13,7 @@ export default function SubCategoryMenu({ subcategories, activeSubCategoryId, on
           className={`${styles.pill} ${activeSubCategoryId === 'all' ? styles.active : ''}`}
           onClick={() => onSelect('all')}
         >
-          {language === 'br' || language === 'pt' ? 'Todos' : 'All'}
+          {language === 'es' ? 'Todos' : (language === 'br' || language === 'pt' ? 'Todos' : 'All')}
         </button>
 
         {subcategories.map((sub) => (

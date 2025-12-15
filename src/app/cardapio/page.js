@@ -172,7 +172,10 @@ export default function CardapioPage() {
       const targetTableId = data?.tableId;
       // Verifica se é para esta mesa
       if (!targetTableId || targetTableId === tableUUID) {
-        // Redireciona para a tela de agradecimento
+        // Dispara screensaver imediatamente
+        window.dispatchEvent(new Event('force-screensaver'));
+
+        // Redireciona para a tela de agradecimento (opcional, ou apenas reseta)
         router.push('/thank-you');
       }
     });

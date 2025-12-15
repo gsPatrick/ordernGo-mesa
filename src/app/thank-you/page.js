@@ -13,6 +13,9 @@ export default function ThankYouPage() {
         // Se for cliente, o cookie de sessão já expiraria, mas forçamos a limpeza
         Cookies.remove('ordengo_session_token');
         // Não removemos ordengo_table_token pois pode ser necessário para reabrir
+
+        // Dispara Screensaver ao carregar a página de Agradecimento
+        window.dispatchEvent(new Event('force-screensaver'));
     }, []);
 
     const handleNewSession = () => {

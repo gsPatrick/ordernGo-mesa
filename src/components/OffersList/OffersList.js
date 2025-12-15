@@ -62,7 +62,7 @@ export default function OffersList() {
   const isPromoActiveNow = (promo) => {
     const now = new Date();
     const currentDay = now.getDay();
-    
+
     if (!promo.activeDays.includes(currentDay)) return false;
 
     const currentTime = now.toTimeString().slice(0, 5);
@@ -76,7 +76,7 @@ export default function OffersList() {
   };
 
   const formatDays = (days) => {
-    if (days.length === 7) return currentLang === 'us' ? 'Every day' : 'Todos os dias';
+    if (days.length === 7) return currentLang === 'us' ? 'Every day' : (currentLang === 'es' ? 'Todos los días' : 'Todos os dias');
     const map = {
       br: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
       us: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -101,10 +101,10 @@ export default function OffersList() {
           </div>
           <h2 className={styles.emptyTitle}>{t.emptyTitle[currentLang]}</h2>
           <p className={styles.emptyDescription}>{t.emptyDesc[currentLang]}</p>
-          
+
           {/* Elemento decorativo de fundo */}
           <div className={styles.bgDecoration}>
-             <FaPercentage size={300} />
+            <FaPercentage size={300} />
           </div>
         </div>
       </div>
@@ -117,16 +117,16 @@ export default function OffersList() {
         {promotions.map((promo) => {
           const active = isPromoActiveNow(promo);
           const imageUrl = promo.imageUrl ? `${BASE_IMG_URL}${promo.imageUrl}` : '/placeholder.png';
-          
+
           return (
             <div key={promo.id} className={`${styles.card} ${!active ? styles.disabledCard : ''}`}>
-              
+
               <div className={styles.imageContainer}>
-                <Image 
-                  src={imageUrl} 
-                  alt={getTrans(promo.title, currentLang)} 
-                  layout="fill" 
-                  objectFit="cover" 
+                <Image
+                  src={imageUrl}
+                  alt={getTrans(promo.title, currentLang)}
+                  layout="fill"
+                  objectFit="cover"
                   className={styles.image}
                   unoptimized={true}
                 />
@@ -160,7 +160,7 @@ export default function OffersList() {
                   </div>
                   <div className={styles.ruleRow}>
                     <FaClock className={styles.icon} />
-                    <span>{promo.startTime.slice(0,5)} - {promo.endTime.slice(0,5)}</span>
+                    <span>{promo.startTime.slice(0, 5)} - {promo.endTime.slice(0, 5)}</span>
                   </div>
                 </div>
               </div>
