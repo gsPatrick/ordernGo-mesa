@@ -98,12 +98,12 @@ export default function AboutModal({ isOpen, onClose, language }) {
                 )}
 
                 {/* História */}
-                <h3>{t.historyTitle[lang]}</h3>
+                <h3 style={{ marginTop: '2rem' }}>{t.historyTitle[lang]}</h3>
                 <p className={styles.justifiedText}>
                   {getTrans(config?.ourHistory, language) || t.defaultText[lang]}
                 </p>
 
-                {/* Wi-Fi - Movido para o final conforme solicitado */}
+                {/* Wi-Fi - Dentro da coluna da esquerda */}
                 {config?.wifiSsid && (
                   <div className={styles.wifiContainer}>
                     <div className={styles.wifiHeader}>
@@ -126,7 +126,6 @@ export default function AboutModal({ isOpen, onClose, language }) {
                     </div>
                   </div>
                 )}
-
               </div>
 
               {/* Main image - only render if exists */}
