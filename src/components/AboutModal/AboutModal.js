@@ -97,7 +97,13 @@ export default function AboutModal({ isOpen, onClose, language }) {
                   </div>
                 )}
 
-                {/* Wi-Fi */}
+                {/* História */}
+                <h3>{t.historyTitle[lang]}</h3>
+                <p className={styles.justifiedText}>
+                  {getTrans(config?.ourHistory, language) || t.defaultText[lang]}
+                </p>
+
+                {/* Wi-Fi - Movido para o final conforme solicitado */}
                 {config?.wifiSsid && (
                   <div className={styles.wifiContainer}>
                     <div className={styles.wifiHeader}>
@@ -139,15 +145,6 @@ export default function AboutModal({ isOpen, onClose, language }) {
                 </div>
               </section>
             )}
-
-            {/* História */}
-            <section className={styles.bottomSection}>
-              <h3>{getTrans(config?.ourHistoryTitle, language) || t.historyTitle[lang]}</h3>
-              <p className={styles.justifiedText}>
-                {getTrans(config?.ourHistory, language) || config?.description || t.defaultText[lang]}
-              </p>
-            </section>
-
           </div>
         )}
       </div>
