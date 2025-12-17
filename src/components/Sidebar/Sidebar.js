@@ -126,44 +126,7 @@ export default function Sidebar({
           {t.review[currentLang]}
         </button>
 
-        <div className={styles.languageWrapper} ref={dropdownRef}>
-          <button
-            className={styles.languageButton}
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            <Image
-              src={languages[currentLang].flag}
-              alt="Idioma"
-              width={30}
-              height={20}
-              className={styles.flagImage}
-            />
-            <IoIosArrowUp color="#aaa" size={14} />
-          </button>
-
-          {isDropdownOpen && (
-            <div className={styles.dropdownMenu}>
-              {Object.keys(languages)
-                .filter((lang) => lang !== currentLang)
-                .map((langCode) => (
-                  <div
-                    key={langCode}
-                    className={styles.dropdownItem}
-                    onClick={() => handleLanguageSelect(langCode)}
-                  >
-                    <Image
-                      src={languages[langCode].flag}
-                      alt={languages[langCode].name}
-                      width={24}
-                      height={16}
-                      className={styles.flagImage}
-                    />
-                    <span>{languages[langCode].name}</span>
-                  </div>
-                ))}
-            </div>
-          )}
-        </div>
+        {/* Language Selector Removed as per request */}
 
         {/* LOGO DO RESTAURANTE COM CLICK SECRETO */}
         <button onClick={handleLogoClick} className={styles.brandLogoButton}>

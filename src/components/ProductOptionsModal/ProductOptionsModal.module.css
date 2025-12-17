@@ -191,8 +191,13 @@
    então usamos classes globais ou composição */
 .choiceLabel.selected {
   border-color: var(--primary-color);
-  background-color: rgba(0, 0, 0, 0.02);
-  /* Leve highlight */
+  background-color: rgba(0, 0, 0, 0.05);
+  /* Mais visível */
+}
+
+.choiceLabel span {
+  color: #333;
+  /* Forçar cor escura para garantir contraste */
 }
 
 /* Workaround para bolinha do radio/checkbox */

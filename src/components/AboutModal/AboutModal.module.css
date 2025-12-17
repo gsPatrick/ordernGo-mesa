@@ -23,6 +23,8 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
+  background-color: #df0024;
+  /* Fallback explícito */
   background-color: var(--primary-red);
   color: white;
   border: none;
