@@ -45,7 +45,7 @@ export default function Sidebar({
   const currentLang = languages[language] ? language : 'br';
 
   // Logo fixa do Ordengo na Sidebar (conforme solicitado)
-  const logoUrl = "/logocerta.png";
+  const logoUrl = "/logoorder.png";
 
   useEffect(() => {
     function handleClickOutside(event) {
